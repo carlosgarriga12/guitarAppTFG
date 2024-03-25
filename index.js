@@ -1,13 +1,29 @@
-$(document).ready(function () {
-    $("#afinacionPredefinida").change(function () {
-        if ($(this).val() === "personalizada") {
+class GuitarApp {
+    constructor() {
+        $(document).ready(() => {
+            this.initEventListeners();
+        });
+    }
+
+    initEventListeners() {
+        $("#afinacionPredefinida").change(() => this.togglePersonalizadaContainer());
+
+        $("#agregarCuerda").click(() => this.agregarCuerda());
+
+        $("#eliminarUltimaCuerda").click(() => this.eliminarUltimaCuerda());
+
+        $("#afinacionForm").submit((event) => this.guardarAfinacion(event));
+    }
+
+    togglePersonalizadaContainer() {
+        if ($("#afinacionPredefinida").val() === "personalizada") {
             $("#personalizadaContainer").show();
         } else {
             $("#personalizadaContainer").hide();
         }
-    });
+    }
 
-    $("#agregarCuerda").click(function () {
+    agregarCuerda() {
         let numCuerdas = $("#cuerdasContainer select").length / 2 + 1;
         let nuevoCampo = `<div id="cuerda${numCuerdas}">
                             <label for="personalizadaCuerda${numCuerdas}Nombre">Nombre Cuerda ${numCuerdas}:</label>
@@ -39,26 +55,27 @@ $(document).ready(function () {
                         </div>`;
         $("#cuerdasContainer").append(nuevoCampo);
         $("#eliminarUltimaCuerda").show();
-    });
+    }
 
-    $("#eliminarUltimaCuerda").click(function () {
+    eliminarUltimaCuerda() {
         $("#cuerdasContainer div:last-child").remove();
         if ($("#cuerdasContainer select").length === 0) {
-            $(this).hide();
+            $("#eliminarUltimaCuerda").hide();
         }
-    });
-});
+    }
 
-$(document).ready(function () {
-    $("#afinacionForm").submit(function (event) {
+    guardarAfinacion(event) {
         event.preventDefault();
+
+        if ($("#afinacionPredefinida").val() === "personalizada" && $("#cuerdasContainer select").length === 0) {
+            alert("Debes añadir al menos una cuerda para una afinación personalizada.");
+            return;
+        }
 
         let afinacionData = {};
 
-
         if ($("#afinacionPredefinida").val() === "personalizada") {
             let notas = [];
-
 
             $("#cuerdasContainer div").each(function () {
                 let notaCompleta = $(this).find("select[name^='personalizadaCuerda'] option:selected").text();
@@ -69,16 +86,15 @@ $(document).ready(function () {
                 notas.push(nota);
             });
 
-
             afinacionData.notasPersonalizadas = notas;
         } else {
-
             afinacionData.afinacionPredefinida = $("#afinacionPredefinida").val();
         }
-
 
         localStorage.setItem("afinacionData", JSON.stringify(afinacionData));
 
         window.location.href = "config.html";
-    });
-});
+    }
+}
+
+new GuitarApp();

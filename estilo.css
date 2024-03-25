@@ -46,13 +46,36 @@ select:focus {
     border-color: #777; 
 }
 
-#guitarra {
-    margin: 0 auto;
+#guitarraContainer {
     display: flex;
     width: 80vw;
     height: 40vh;
+}
+
+#guitarra {
+    display: flex;
+    width: 80%;
     border-left: 6px solid #000;
     background-color: #49351c; 
+}
+
+#guitarraNotasAfinacion,
+#guitarraNotasAcorde{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 10%;
+    justify-content: space-around;
+}
+
+#guitarraNotasAfinacion div {
+    text-align: center;
+    font-size: 2em;
+}
+
+#guitarraNotasAcorde div {
+    text-align: center;
+    font-size: 2em;
+    color: #ffe100;
 }
 
 .cuerda {
@@ -74,9 +97,9 @@ select:focus {
 
 .dedo {
     margin: 0 auto;
-    width: 4vw;
-    height: 4vw;
-    background-color: #b71c1c;
+    width: 3.5vw;
+    height: 3.5vw;
+    background-color: #ffe100;
     border-radius: 50%;
     position: absolute;
     top: 50%;

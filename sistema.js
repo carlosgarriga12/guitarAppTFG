@@ -66,17 +66,17 @@ class Nota {
         const nombres = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
         let nombre = this.getFullName()
         if (nombre.length === 2) {
-            if(nombre.charAt(0) === "E") {
+            if (nombre.charAt(0) === "E") {
                 return new Nota("F", "", this.octava); //Mantenemos la misma octava
             }
 
-            if(nombre.charAt(0) === "B") {
+            if (nombre.charAt(0) === "B") {
                 return new Nota("C", "", this.octava + 1); //Tenemos que aumentar la octava
             }
 
             return new Nota(this.nombre, "#", this.octava);
         } else {
-            if(this.alteracion === 'b') {
+            if (this.alteracion === 'b') {
                 return new Nota(this.nombre, "", this.octava);
             } else if (this.alteracion === "#") {
                 switch (this.nombre) {
@@ -99,15 +99,15 @@ class Nota {
         const nombres = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
         let indice1 = nombres.indexOf(this.nombre);
         let indice2 = nombres.indexOf(otraNota.nombre);
-    
+
         let distancia = Math.abs(indice2 - indice1);
-    
+
         return distancia;
     }
 
     calculaSiguienteNota(semitonos) {
         let nota = this;
-        for(let i = 0; i < semitonos; i++) {
+        for (let i = 0; i < semitonos; i++) {
             nota = nota.siguiente();
         }
         return nota;
@@ -120,7 +120,7 @@ class Guitarra {
         this.mastil = []; // Inicializa el mástil con una matriz vacía
         this.trastes = 12;
 
-        for(let i = 0; i < this.afinacion.length; i++) {
+        for (let i = 0; i < this.afinacion.length; i++) {
             let fila = new Array(this.trastes);
             this.mastil.push(fila);
         }
@@ -132,7 +132,16 @@ class Guitarra {
 
     pintarAcorde(posicionDedos) {
         for (let i = 0; i < posicionDedos.length; i++) {
-            if(posicionDedos[i] !== 0) {
+            let notaInicial = this.afinacion[i];
+
+            for(let j = 0; j < posicionDedos[i]; j++) {
+                notaInicial = notaInicial.siguiente();
+            }
+
+            $("#guitarraNotasAcorde").append($("<div>")
+                                                    .addClass("notaAcorde")
+                                                    .html(notaInicial.getName() + notaInicial.getOctava()))
+            if (posicionDedos[i] !== 0) {
                 let posicion = $("<div>").addClass("dedo");
                 let id = "#cuerda" + i + "Traste" + (posicionDedos[i] - 1);
                 $(id).append(posicion)
@@ -145,17 +154,22 @@ class Guitarra {
         for (let i = 0; i < this.trastes; i++) {
             let traste = $('<div>').addClass("traste").attr("id", "traste" + i);
             elementoGuitarra.append(traste);
-            for (let j = this.afinacion.length - 1; j >=0 ; j--) {
+            for (let j = this.afinacion.length - 1; j >= 0; j--) {
                 let cuerda = $('<div>').addClass("cuerda").attr("id", "cuerda" + j + "Traste" + i);
                 traste.append(cuerda);
             }
         }
+
     }
-    
+
     rellenarMastil() {
+        console.log(this.afinacion)
         for (let i = 0; i < this.afinacion.length; i++) {
             let notaActual = this.afinacion[i];
-            for(let j = 0; j < this.trastes; j++) {
+            $("#guitarraNotasAfinacion").append($("<div>")
+                                        .attr("id", "nota" + (this.afinacion.length - i))
+                                        .html(notaActual.getName() + notaActual.getOctava()))
+            for (let j = 0; j < this.trastes; j++) {
                 this.mastil[i][j] = notaActual;
                 notaActual = notaActual.siguiente();
             }
@@ -166,15 +180,15 @@ class Guitarra {
         let posicionDedos = []
         //Busca por cada cuerda la próxima nota que coincida con el acorde dado
         //Mejorar algoritmo y realizar pruebas
-            for(let i = 0; i < this.afinacion.length; i++) {
-        loop:
-                for(let j = 0; j < this.trastes; j++) {
-                    if(notasAcorde.includes(this.mastil[i][j].getName())) {
-                        posicionDedos.push(j);
-                        break loop;
-                    }
+        for (let i = 0; i < this.afinacion.length; i++) {
+            loop:
+            for (let j = 0; j < this.trastes; j++) {
+                if (notasAcorde.includes(this.mastil[i][j].getName())) {
+                    posicionDedos.push(j);
+                    break loop;
                 }
             }
+        }
 
         return posicionDedos;
     }
@@ -188,28 +202,28 @@ if (formDataJSON) {
 
     console.log(JSON.stringify(formData, null, 2))
 
-    if(formData.afinacionPredefinida === "estandar") {
+    if (formData.afinacionPredefinida === "estandar") {
         guitarra = new Guitarra([
-            new Nota("E", "", 2), 
-            new Nota("A", "", 2), 
+            new Nota("E", "", 2),
+            new Nota("A", "", 2),
             new Nota("D", "", 3),
             new Nota("G", "", 3),
             new Nota("B", "", 3),
             new Nota("E", "", 4)
         ]);
-    } else if(formData.afinacionPredefinida === "dropD") {
+    } else if (formData.afinacionPredefinida === "dropD") {
         guitarra = new Guitarra([
-            new Nota("D", "", 2), 
-            new Nota("A", "", 2), 
+            new Nota("D", "", 2),
+            new Nota("A", "", 2),
             new Nota("D", "", 3),
             new Nota("G", "", 3),
             new Nota("B", "", 3),
             new Nota("E", "", 4)
         ]);
-    } else if(formData.afinacionPredefinida === "openD") {
+    } else if (formData.afinacionPredefinida === "openD") {
         guitarra = new Guitarra([
-            new Nota("D", "", 2), 
-            new Nota("A", "", 2), 
+            new Nota("D", "", 2),
+            new Nota("A", "", 2),
             new Nota("D", "", 3),
             new Nota("F", "#", 3),
             new Nota("A", "", 3),
@@ -220,15 +234,15 @@ if (formDataJSON) {
 
         formData.notasPersonalizadas.map(nota => {
             let alteracion = "";
-            if(nota.nombre.length > 1) {
+            if (nota.nombre.length > 1) {
                 alteracion = nota.nombre[1];
             }
             notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
         })
-        
+
         guitarra = new Guitarra(notas);
     }
-    
+
 } else {
     console.log("No hay envío en el formulario")
 }
@@ -249,21 +263,21 @@ class Acorde {
         this.notas = [];
 
         let distancias;
-        switch(tipo) {
+        switch (tipo) {
             case Acordes.Mayor:
-                distancias = [0,4,7]
+                distancias = [0, 4, 7]
                 break;
             case Acordes.Menor:
-                distancias = [0,3,7]
+                distancias = [0, 3, 7]
                 break;
             case Acordes.Septima:
-                distancias = [0,4,7,10]
+                distancias = [0, 4, 7, 10]
                 break;
             default:
                 break;
         }
 
-        for(let i = 0; i < distancias.length; i++) {
+        for (let i = 0; i < distancias.length; i++) {
             this.notas.push(notaBase.calculaSiguienteNota(distancias[i]).getName());
         }
     }
@@ -274,9 +288,6 @@ class Acorde {
 }
 
 let acordeDeDoMayor = new Acorde(new Nota("C", "", 3), Acordes.Mayor);
-console.log(acordeDeDoMayor.getNotas())
-
-
 guitarra.pintarAcorde(guitarra.buscarAcorde(acordeDeDoMayor.getNotas()))
 
 const synth = new Tone.PolySynth(Tone.Synth, {
@@ -304,14 +315,8 @@ function volverIndex() {
     window.location.href = "index.html";
 }
 
-function mostrarAcordeActual(acorde) {
-    document.getElementById("acordeActual").textContent = "Acorde Actual: " + acorde;
-}
-
-$(document).ready(function() {
-    $("#acordeForm").submit(function(event) {
-        event.preventDefault();
-        
+$(document).ready(function () {
+    $("#acordeForm select").change(function () {
         let notaBase = $("#notaBase").val();
         let tipoAcorde = $("#tipoAcorde").val();
 
@@ -324,12 +329,11 @@ $(document).ready(function() {
         } else {
             acorde = new Acorde(new Nota(notaBase, "", 3), Acordes[tipoAcorde]);
         }
-        
-        let notasAcorde = acorde.getNotas();
-        let acordeActual = notaBase + " " + tipoAcorde;
 
-        mostrarAcordeActual(acordeActual);
+        let notasAcorde = acorde.getNotas();
+
         $(".dedo").remove();
+        $(".notaAcorde").remove();
 
         guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde));
     });

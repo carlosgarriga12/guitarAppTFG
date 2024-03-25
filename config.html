@@ -15,38 +15,39 @@
     <header>
         <h1>Generador de acordes</h1>
     </header>
-    <form id="acordeForm">
-        <p>
-            <label for="notaBase">Nota Base:</label>
-            <select name="notaBase" id="notaBase">
-                <option value="C">C</option>
-                <option value="C#">C#</option>
-                <option value="D">D</option>
-                <option value="D#">D#</option>
-                <option value="E">E</option>
-                <option value="F">F</option>
-                <option value="F#">F#</option>
-                <option value="G">G</option>
-                <option value="G#">G#</option>
-                <option value="A">A</option>
-                <option value="A#">A#</option>
-                <option value="B">B</option>
-            </select>
-            <label for="tipoAcorde">Tipo de Acorde:</label>
-            <select name="tipoAcorde" id="tipoAcorde">
-                <option value="Mayor">Mayor</option>
-                <option value="Menor">Menor</option>
-                <option value="Septima">Séptima</option>
-            </select>
-        </p>
-        <p>
-            <button type="submit">Dibujar Acorde</button>
-        </p>
-    </form>
-    
-    <div id="guitarra"></div>
-    <p id="acordeActual"></p>
-    
+    <p id="acordeForm">
+        <label for="notaBase">Nota Base:</label>
+        <select name="notaBase" id="notaBase">
+            <option value="C">C</option>
+            <option value="C#">C#</option>
+            <option value="D">D</option>
+            <option value="D#">D#</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="F#">F#</option>
+            <option value="G">G</option>
+            <option value="G#">G#</option>
+            <option value="A">A</option>
+            <option value="A#">A#</option>
+            <option value="B">B</option>
+        </select>
+        <label for="tipoAcorde">Tipo de Acorde:</label>
+        <select name="tipoAcorde" id="tipoAcorde">
+            <option value="Mayor">Mayor</option>
+            <option value="Menor">Menor</option>
+            <option value="Septima">Séptima</option>
+        </select>
+    </p>
+    <div id="guitarraContainer">
+        <div id="guitarraNotasAfinacion">
+            
+        </div>
+        <div id="guitarraNotasAcorde">
+
+        </div>
+        <div id="guitarra"></div>
+    </div>
+
     <script src="sistema.js"></script>
     <button onclick="volverIndex()">Volver a la configuración</button>
     <button onclick="generarSonido()">Sonido</button>
