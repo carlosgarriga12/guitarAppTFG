@@ -1,0 +1,17 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "Prueba de proyecto con electronJS",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Carlos Garriga Suárez",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.2.2"
+  },
+  "dependencies": {
+    "tone": "^14.7.77"
+  }
+}

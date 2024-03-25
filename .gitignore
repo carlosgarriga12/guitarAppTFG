@@ -1,0 +1,17 @@
+node_modules/
+
+/dist/
+/out/
+
+.env
+
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
