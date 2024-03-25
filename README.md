@@ -9,7 +9,7 @@ Antes de comenzar, asegúrate de tener Node.js y npm instalados en tu sistema. L
 ```bash
 npm install electron
 ```
-Para ejecutar la aplicación solamente tienes que escribir en la línea de comandos de la raíz del proyecto lo siguiente:
+Para iniciar la aplicación solamente tienes que ejecutar en la línea de comandos de la raíz del proyecto lo siguiente:
 
 ```bash
 npm start
