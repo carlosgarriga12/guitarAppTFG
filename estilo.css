@@ -9,6 +9,10 @@ body {
     color: #fff;
 }
 
+h2 {
+    text-align: center;
+}
+
 button {
     padding: 10px 20px;
     margin: 5px;
@@ -46,13 +50,15 @@ select:focus {
     border-color: #777; 
 }
 
-#guitarraContainer {
+#guitarraContainer,
+#containerJuego {
     display: flex;
     width: 80vw;
     height: 40vh;
 }
 
-#guitarra {
+#guitarra,
+#guitarraJuego {
     display: flex;
     width: 80%;
     border-left: 6px solid #000;
@@ -60,14 +66,16 @@ select:focus {
 }
 
 #guitarraNotasAfinacion,
-#guitarraNotasAcorde{
+#guitarraNotasAcorde,
+#guitarraNotasJuego{
     display: flex;
     flex-direction: column-reverse;
     width: 10%;
     justify-content: space-around;
 }
 
-#guitarraNotasAfinacion div {
+#guitarraNotasAfinacion div,
+#guitarraNotasJuego div {
     text-align: center;
     font-size: 2em;
 }
@@ -83,6 +91,7 @@ select:focus {
     width: 100%;
     background-color: #777; 
     position: relative;
+    cursor: pointer;
 }
 
 .traste {

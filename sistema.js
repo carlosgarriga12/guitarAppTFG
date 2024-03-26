@@ -112,6 +112,17 @@ class Nota {
         }
         return nota;
     }
+
+    getNotaAleatoria() {
+        const notas = ["C", "D", "E", "F", "G", "A", "B"]
+        let nombre = Math.floor(Math.random() * notas.length)
+        let alteracion = "";
+        if (nombre !== "E" && nombre !== "B") {
+            alteracion = (Math.random() < 0.5) ? "" : "#";
+        }
+
+        return new Nota(nombre, alteracion, 3)
+    }
 }
 
 class Guitarra {
@@ -134,13 +145,13 @@ class Guitarra {
         for (let i = 0; i < posicionDedos.length; i++) {
             let notaInicial = this.afinacion[i];
 
-            for(let j = 0; j < posicionDedos[i]; j++) {
+            for (let j = 0; j < posicionDedos[i]; j++) {
                 notaInicial = notaInicial.siguiente();
             }
 
             $("#guitarraNotasAcorde").append($("<div>")
-                                                    .addClass("notaAcorde")
-                                                    .html(notaInicial.getName() + notaInicial.getOctava()))
+                .addClass("notaAcorde")
+                .html(notaInicial.getName() + notaInicial.getOctava()))
             if (posicionDedos[i] !== 0) {
                 let posicion = $("<div>").addClass("dedo");
                 let id = "#cuerda" + i + "Traste" + (posicionDedos[i] - 1);
@@ -163,12 +174,11 @@ class Guitarra {
     }
 
     rellenarMastil() {
-        console.log(this.afinacion)
         for (let i = 0; i < this.afinacion.length; i++) {
             let notaActual = this.afinacion[i];
             $("#guitarraNotasAfinacion").append($("<div>")
-                                        .attr("id", "nota" + (this.afinacion.length - i))
-                                        .html(notaActual.getName() + notaActual.getOctava()))
+                .attr("id", "nota" + (this.afinacion.length - i))
+                .html(notaActual.getName() + notaActual.getOctava()))
             for (let j = 0; j < this.trastes; j++) {
                 this.mastil[i][j] = notaActual;
                 notaActual = notaActual.siguiente();
@@ -194,58 +204,59 @@ class Guitarra {
     }
 
 }
-let guitarra;
 
-let formDataJSON = localStorage.getItem("afinacionData");
-if (formDataJSON) {
-    let formData = JSON.parse(formDataJSON);
+class ServicioAfinacion {
+    obtenerAfinacionGuardada() {
+        let formDataJSON = localStorage.getItem("afinacionData");
+        if (formDataJSON) {
+            let formData = JSON.parse(formDataJSON);
 
-    console.log(JSON.stringify(formData, null, 2))
+            if (formData.afinacionPredefinida === "estandar") {
+                return [
+                    new Nota("E", "", 2),
+                    new Nota("A", "", 2),
+                    new Nota("D", "", 3),
+                    new Nota("G", "", 3),
+                    new Nota("B", "", 3),
+                    new Nota("E", "", 4)
+                ];
+            } else if (formData.afinacionPredefinida === "dropD") {
+                return [
+                    new Nota("D", "", 2),
+                    new Nota("A", "", 2),
+                    new Nota("D", "", 3),
+                    new Nota("G", "", 3),
+                    new Nota("B", "", 3),
+                    new Nota("E", "", 4)
+                ];
+            } else if (formData.afinacionPredefinida === "openD") {
+                return [
+                    new Nota("D", "", 2),
+                    new Nota("A", "", 2),
+                    new Nota("D", "", 3),
+                    new Nota("F", "#", 3),
+                    new Nota("A", "", 3),
+                    new Nota("D", "", 4)
+                ];
+            } else {
+                let notas = [];
 
-    if (formData.afinacionPredefinida === "estandar") {
-        guitarra = new Guitarra([
-            new Nota("E", "", 2),
-            new Nota("A", "", 2),
-            new Nota("D", "", 3),
-            new Nota("G", "", 3),
-            new Nota("B", "", 3),
-            new Nota("E", "", 4)
-        ]);
-    } else if (formData.afinacionPredefinida === "dropD") {
-        guitarra = new Guitarra([
-            new Nota("D", "", 2),
-            new Nota("A", "", 2),
-            new Nota("D", "", 3),
-            new Nota("G", "", 3),
-            new Nota("B", "", 3),
-            new Nota("E", "", 4)
-        ]);
-    } else if (formData.afinacionPredefinida === "openD") {
-        guitarra = new Guitarra([
-            new Nota("D", "", 2),
-            new Nota("A", "", 2),
-            new Nota("D", "", 3),
-            new Nota("F", "#", 3),
-            new Nota("A", "", 3),
-            new Nota("D", "", 4)
-        ]);
-    } else {
-        let notas = [];
+                formData.notasPersonalizadas.map(nota => {
+                    let alteracion = "";
+                    if (nota.nombre.length > 1) {
+                        alteracion = nota.nombre[1];
+                    }
+                    notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
+                })
 
-        formData.notasPersonalizadas.map(nota => {
-            let alteracion = "";
-            if (nota.nombre.length > 1) {
-                alteracion = nota.nombre[1];
+                return notas;
             }
-            notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
-        })
-
-        guitarra = new Guitarra(notas);
+        }
     }
-
-} else {
-    console.log("No hay envío en el formulario")
 }
+
+let afinacion = new ServicioAfinacion();
+let guitarra = new Guitarra(afinacion.obtenerAfinacionGuardada())
 
 guitarra.pintar();
 guitarra.rellenarMastil();
@@ -315,6 +326,10 @@ function volverIndex() {
     window.location.href = "index.html";
 }
 
+function irAJuego() {
+    window.location.href = "juego.html";
+}
+
 $(document).ready(function () {
     $("#acordeForm select").change(function () {
         let notaBase = $("#notaBase").val();
@@ -338,3 +353,61 @@ $(document).ready(function () {
         guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde));
     });
 });
+
+class Juego {
+    constructor(guitarra) {
+        this.puntuacion = 0;
+        this.afinacion = afinacion.obtenerAfinacionGuardada();
+        this.guitarra = guitarra;
+    }
+
+    pintarMastilJuego() {
+        let elementoGuitarra = $("#guitarraJuego");
+        for (let i = 0; i < this.guitarra.trastes; i++) {
+            let traste = $('<div>')
+            .addClass("traste")
+            .attr("id", "traste" + i);
+            elementoGuitarra.append(traste);
+            for (let j = this.guitarra.afinacion.length - 1; j >= 0; j--) {
+                let cuerda = $('<div>')
+                .addClass("cuerda")
+                .addClass("cuerdaJuego")
+                .attr("id", "cuerda" + j + "Traste" + i);
+                traste.append(cuerda);
+            }
+        }
+    }
+
+    pintarAfinacionActual() {
+        for (let i = 0; i < this.guitarra.afinacion.length; i++) {
+            let notaActual = this.guitarra.afinacion[i];
+            $("#guitarraNotasJuego").append($("<div>")
+                .attr("id", "notaJuego" + (this.guitarra.afinacion.length - i))
+                .html(notaActual.getName() + notaActual.getOctava()))
+        }
+    }
+
+    comenzar() {
+        $("main button").remove();
+        $("main").append($("<div>").attr("id", "containerJuego"))
+        $("#containerJuego").append($("<div>").attr("id", "guitarraNotasJuego"))
+        this.pintarAfinacionActual();
+        $("#containerJuego").append($("<div>").attr("id", "guitarraJuego"))
+        this.pintarMastilJuego();
+        $("main").append($("<button>").on("click", () => {
+            window.location.href = "index.html";
+        }).html("Cambiar la configuración"))
+
+        
+    }
+
+    siguiente() {
+        
+    }
+
+    hasGanado() {
+
+    }
+}
+
+let juego = new Juego(guitarra);
