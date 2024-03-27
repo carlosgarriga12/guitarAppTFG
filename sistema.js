@@ -13,6 +13,11 @@ class Nota {
         return this.octava;
     }
 
+    setOctava(octava) {
+        this.octava = octava;
+        return this;
+    }
+
     getName() {
         return this.nombre + this.alteracion;
     }
@@ -256,7 +261,14 @@ guitarra.rellenarMastil();
 const Acordes = {
     Mayor: "M",
     Menor: "m",
-    Septima: "7"
+    Septima: "7",
+    Aumentado: "Aug",
+    Disminuido: "dim",
+    MayorSiete: "M7",
+    MenorSiete: "m7",
+    MenorSieteB5: "m7b5", // Semidisminuido
+    SusDos: "Sus2",
+    SusCuatro: "Sus4"
 }
 
 class Acorde {
@@ -264,6 +276,7 @@ class Acorde {
         this.notaBase = notaBase;
         this.tipo = tipo;
         this.notas = [];
+        this.notasObjeto = [];
 
         let distancias;
         switch (tipo) {
@@ -276,13 +289,42 @@ class Acorde {
             case Acordes.Septima:
                 distancias = [0, 4, 7, 10]
                 break;
+            case Acordes.Aumentado:
+                distancias = [0, 4, 8]
+                break;
+            case Acordes.Disminuido:
+                distancias = [0, 3, 6]
+                break;
+            case Acordes.MayorSiete:
+                distancias = [0, 4, 7, 11]
+                break;
+            case Acordes.MenorSiete:
+                distancias = [0, 3, 7, 10]
+                break;
+            case Acordes.MenorSieteB5:
+                distancias = [0, 3, 6, 10]
+                break;
+            case Acordes.SusDos:
+                distancias = [0, 2, 7]
+                break;
+            case Acordes.SusCuatro:
+                distancias = [0, 5, 7]
+                break;
             default:
                 break;
         }
 
         for (let i = 0; i < distancias.length; i++) {
             this.notas.push(notaBase.calculaSiguienteNota(distancias[i]).getName());
+            this.notasObjeto.push(notaBase.calculaSiguienteNota(distancias[i]));
         }
+    }
+    getNotaBase() {
+        return this.notaBase;
+    }
+
+    getNotasObjeto() {
+        return this.notasObjeto;
     }
 
     getTipo() {
@@ -301,8 +343,8 @@ class Acorde {
     }
 }
 
-let acordeDeDoMayor = new Acorde(new Nota("C", "", 3), Acordes.Mayor);
-guitarra.pintarAcorde(guitarra.buscarAcorde(acordeDeDoMayor.getNotas()))
+let acordeActual = new Acorde(new Nota("C", "", 3), Acordes.Mayor);
+guitarra.pintarAcorde(guitarra.buscarAcorde(acordeActual.getNotas()))
 
 const synth = new Tone.PolySynth(Tone.Synth, {
     volume: -5,
@@ -319,10 +361,13 @@ const synth = new Tone.PolySynth(Tone.Synth, {
 }).toDestination();
 
 function generarSonido() {
-    let now = Tone.now()
-    acordeDeDoMayor.getNotas().map(nota => {
-        synth.triggerAttackRelease(nota.getName() + nota.getOctava(), "8n", now)
-    })
+    let tiempoEspera = acordeActual.getNotasObjeto().length === 3 ? 75 : 100;
+    let acordeAux = new Acorde(acordeActual.getNotaBase().setOctava(4), acordeActual.getTipo())
+    acordeAux.getNotasObjeto().forEach((nota, index) => {
+        setTimeout(() => {
+            synth.triggerAttackRelease(nota.getName() + nota.getOctava(), "8n", Tone.now())
+        }, index * tiempoEspera);
+    });
 }
 
 function volverIndex() {
@@ -338,17 +383,15 @@ $(document).ready(function () {
         let notaBase = $("#notaBase").val();
         let tipoAcorde = $("#tipoAcorde").val();
 
-        let acorde;
-
         if (notaBase.length > 1) {
             let notaInicial = notaBase[0];
             let alteracion = notaBase[1];
-            acorde = new Acorde(new Nota(notaInicial, alteracion, 3), Acordes[tipoAcorde]);
+            acordeActual = new Acorde(new Nota(notaInicial, alteracion, 3), Acordes[tipoAcorde]);
         } else {
-            acorde = new Acorde(new Nota(notaBase, "", 3), Acordes[tipoAcorde]);
+            acordeActual = new Acorde(new Nota(notaBase, "", 3), Acordes[tipoAcorde]);
         }
-
-        let notasAcorde = acorde.getNotas();
+        
+        let notasAcorde = acordeActual.getNotas();
 
         $(".dedo").remove();
         $(".notaAcorde").remove();
@@ -371,7 +414,7 @@ class Aleatorio {
 
     static getAcorde(notaBase) {
         let keys = Object.keys(Acordes);
-        let tipoAcorde = Acordes[keys[ keys.length * Math.random() << 0]];
+        let tipoAcorde = Acordes[keys[keys.length * Math.random() << 0]];
         return new Acorde(notaBase, tipoAcorde);
     }
 }
@@ -387,14 +430,14 @@ class Juego {
         let elementoGuitarra = $("#guitarraJuego");
         for (let i = 0; i < this.guitarra.trastes; i++) {
             let traste = $('<div>')
-            .addClass("traste")
-            .attr("id", "traste" + i);
+                .addClass("traste")
+                .attr("id", "traste" + i);
             elementoGuitarra.append(traste);
             for (let j = this.guitarra.afinacion.length - 1; j >= 0; j--) {
                 let cuerda = $('<div>')
-                .addClass("cuerda")
-                .addClass("cuerdaJuego")
-                .attr("id", "JuegoCuerda" + j + "Traste" + i);
+                    .addClass("cuerda")
+                    .addClass("cuerdaJuego")
+                    .attr("id", "JuegoCuerda" + j + "Traste" + i);
                 traste.append(cuerda);
             }
         }
@@ -446,10 +489,6 @@ class Juego {
     siguiente() {
         $(".dedo").remove();
         this.pintarNuevoAcorde();
-    }
-
-    hasGanado() {
-
     }
 }
 
