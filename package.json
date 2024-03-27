@@ -9,7 +9,7 @@
   "author": "Carlos Garriga Suárez",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^28.2.2"
+    "electron": "^28.2.8"
   },
   "dependencies": {
     "tone": "^14.7.77"

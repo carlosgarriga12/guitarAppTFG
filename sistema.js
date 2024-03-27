@@ -5,6 +5,10 @@ class Nota {
         this.octava = octava;
     }
 
+    getAlteracion() {
+        return this.alteracion;
+    }
+
     getOctava() {
         return this.octava;
     }
@@ -112,17 +116,6 @@ class Nota {
         }
         return nota;
     }
-
-    getNotaAleatoria() {
-        const notas = ["C", "D", "E", "F", "G", "A", "B"]
-        let nombre = Math.floor(Math.random() * notas.length)
-        let alteracion = "";
-        if (nombre !== "E" && nombre !== "B") {
-            alteracion = (Math.random() < 0.5) ? "" : "#";
-        }
-
-        return new Nota(nombre, alteracion, 3)
-    }
 }
 
 class Guitarra {
@@ -170,7 +163,6 @@ class Guitarra {
                 traste.append(cuerda);
             }
         }
-
     }
 
     rellenarMastil() {
@@ -293,8 +285,19 @@ class Acorde {
         }
     }
 
+    getTipo() {
+        return this.tipo;
+    }
+
     getNotas() {
         return this.notas;
+    }
+
+    toString() {
+        let aux = "";
+        aux += this.notaBase.getName() + this.notaBase().getAlteracion()
+        aux += this.acorde.getTipo()
+        return aux;
     }
 }
 
@@ -354,6 +357,25 @@ $(document).ready(function () {
     });
 });
 
+class Aleatorio {
+    static getNota() {
+        const notas = ["C", "D", "E", "F", "G", "A", "B"]
+        let nombre = notas[Math.floor(Math.random() * notas.length)]
+        let alteracion = "";
+        if (nombre !== "E" && nombre !== "B") {
+            alteracion = (Math.random() < 0.5) ? "" : "#";
+        }
+
+        return new Nota(nombre, alteracion, 3)
+    }
+
+    static getAcorde(notaBase) {
+        let keys = Object.keys(Acordes);
+        let tipoAcorde = Acordes[keys[ keys.length * Math.random() << 0]];
+        return new Acorde(notaBase, tipoAcorde);
+    }
+}
+
 class Juego {
     constructor(guitarra) {
         this.puntuacion = 0;
@@ -372,7 +394,7 @@ class Juego {
                 let cuerda = $('<div>')
                 .addClass("cuerda")
                 .addClass("cuerdaJuego")
-                .attr("id", "cuerda" + j + "Traste" + i);
+                .attr("id", "JuegoCuerda" + j + "Traste" + i);
                 traste.append(cuerda);
             }
         }
@@ -397,12 +419,33 @@ class Juego {
         $("main").append($("<button>").on("click", () => {
             window.location.href = "index.html";
         }).html("Cambiar la configuración"))
+        $("main").append($("<button>").on("click", () => {
+            this.siguiente()
+        }).html("Siguiente"))
+        this.pintarNuevoAcorde()
+    }
 
-        
+    pintarNuevoAcorde() {
+        let acorde = Aleatorio.getAcorde(Aleatorio.getNota());
+        let posicionDedos = this.guitarra.buscarAcorde(acorde.getNotas())
+
+        for (let i = 0; i < posicionDedos.length; i++) {
+            let notaInicial = this.guitarra.afinacion[i];
+
+            for (let j = 0; j < posicionDedos[i]; j++) {
+                notaInicial = notaInicial.siguiente();
+            }
+            if (posicionDedos[i] !== 0) {
+                let posicion = $("<div>").addClass("dedo");
+                let id = "#JuegoCuerda" + i + "Traste" + (posicionDedos[i] - 1);
+                $(id).append(posicion)
+            }
+        }
     }
 
     siguiente() {
-        
+        $(".dedo").remove();
+        this.pintarNuevoAcorde();
     }
 
     hasGanado() {
@@ -411,3 +454,4 @@ class Juego {
 }
 
 let juego = new Juego(guitarra);
+console.log(Aleatorio.getAcorde(Aleatorio.getNota()))
