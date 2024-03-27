@@ -50,12 +50,33 @@ select:focus {
     border-color: #777; 
 }
 
+#titulos {
+    display: flex;
+    width: 80vw;
+    justify-content: space-around;
+}
+
+#titulos p {
+    width: 10%;
+    text-align: center;
+    font-size: 1.25em;
+}
+
+#titulos p:nth-child(2) {
+    color: #ffe100;
+}
+
+#titulos p:last-child {
+    width: 80%;
+}
+
 #guitarraContainer,
 #containerJuego {
     display: flex;
     width: 80vw;
     height: 40vh;
 }
+
 
 #guitarra,
 #guitarraJuego {
