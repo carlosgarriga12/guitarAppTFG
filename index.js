@@ -26,8 +26,8 @@ class GuitarApp {
     agregarCuerda() {
         let numCuerdas = $("#cuerdasContainer select").length / 2 + 1;
         let nuevoCampo = `<div id="cuerda${numCuerdas}">
-                            <label for="personalizadaCuerda${numCuerdas}Nombre">Nombre Cuerda ${numCuerdas}:</label>
-                            <select name="personalizadaCuerda${numCuerdas}Nombre" id="personalizadaCuerda${numCuerdas}Nombre">
+                            <label for="personalizadaCuerda${numCuerdas}Nota">Nota Cuerda ${numCuerdas}:</label>
+                            <select name="personalizadaCuerda${numCuerdas}Nota" id="personalizadaCuerda${numCuerdas}Nota">
                                 <option value="C">C</option>
                                 <option value="C#">C#</option>
                                 <option value="D">D</option>
@@ -59,7 +59,7 @@ class GuitarApp {
 
     eliminarUltimaCuerda() {
         $("#cuerdasContainer div:last-child").remove();
-        if ($("#cuerdasContainer select").length === 0) {
+        if ($("#cuerdasContainer select").length <= 8) {
             $("#eliminarUltimaCuerda").hide();
         }
     }

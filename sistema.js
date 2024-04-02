@@ -192,6 +192,7 @@ class Guitarra {
             for (let j = 0; j < this.trastes; j++) {
                 if (notasAcorde.includes(this.mastil[i][j].getName())) {
                     posicionDedos.push(j);
+                    
                     break loop;
                 }
             }
