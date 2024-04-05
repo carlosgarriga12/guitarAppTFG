@@ -185,6 +185,7 @@ class Guitarra {
 
     buscarAcorde(notasAcorde) {
         let posicionDedos = []
+        let notasPorEncontrar = [...notasAcorde];
         //Busca por cada cuerda la próxima nota que coincida con el acorde dado
         //Mejorar algoritmo y realizar pruebas
         for (let i = 0; i < this.afinacion.length; i++) {
@@ -192,12 +193,10 @@ class Guitarra {
             for (let j = 0; j < this.trastes; j++) {
                 if (notasAcorde.includes(this.mastil[i][j].getName())) {
                     posicionDedos.push(j);
-                    
                     break loop;
                 }
             }
         }
-
         return posicionDedos;
     }
 
@@ -338,8 +337,8 @@ class Acorde {
 
     toString() {
         let aux = "";
-        aux += this.notaBase.getName() + this.notaBase().getAlteracion()
-        aux += this.acorde.getTipo()
+        aux += this.notaBase.getName()
+        aux += this.getTipo()
         return aux;
     }
 }
@@ -391,7 +390,7 @@ $(document).ready(function () {
         } else {
             acordeActual = new Acorde(new Nota(notaBase, "", 3), Acordes[tipoAcorde]);
         }
-        
+
         let notasAcorde = acordeActual.getNotas();
 
         $(".dedo").remove();
@@ -409,8 +408,8 @@ class Aleatorio {
         if (nombre !== "E" && nombre !== "B") {
             alteracion = (Math.random() < 0.5) ? "" : "#";
         }
-
-        return new Nota(nombre, alteracion, 3)
+        let nota = new Nota(nombre, alteracion, 3);
+        return nota;
     }
 
     static getAcorde(notaBase) {
@@ -454,23 +453,24 @@ class Juego {
     }
 
     comenzar() {
-        $("main button").remove();
-        $("main").append($("<div>").attr("id", "containerJuego"))
+        $("#juegoContainer button").remove();
+        $("#juegoContainer").append($("<div>").attr("id", "containerJuego"))
         $("#containerJuego").append($("<div>").attr("id", "guitarraNotasJuego"))
         this.pintarAfinacionActual();
         $("#containerJuego").append($("<div>").attr("id", "guitarraJuego"))
         this.pintarMastilJuego();
-        $("main").append($("<button>").on("click", () => {
+        $("#juegoContainer").append($("<button>").on("click", () => {
             window.location.href = "index.html";
         }).html("Cambiar la configuración"))
-        $("main").append($("<button>").on("click", () => {
-            this.siguiente()
-        }).html("Siguiente"))
-        this.pintarNuevoAcorde()
+
+        let opcionesContainer = $("<div>").attr("id", "opcionesContainer");
+        $("#juegoContainer").append(opcionesContainer)
+        let acordeAleatorio = Aleatorio.getAcorde(Aleatorio.getNota());
+        this.pintarNuevoAcorde(acordeAleatorio);
+        this.pintarOpciones(acordeAleatorio);
     }
 
-    pintarNuevoAcorde() {
-        let acorde = Aleatorio.getAcorde(Aleatorio.getNota());
+    pintarNuevoAcorde(acorde) {
         let posicionDedos = this.guitarra.buscarAcorde(acorde.getNotas())
 
         for (let i = 0; i < posicionDedos.length; i++) {
@@ -485,13 +485,40 @@ class Juego {
                 $(id).append(posicion)
             }
         }
+        
+    }
+
+    pintarOpciones(acorde) {
+        let numeroAleatorio = Math.floor(Math.random() * 3);
+        console.log(numeroAleatorio)
+        for(let i = 0; i < 3; i++) {
+            if(i === numeroAleatorio) {
+                $("#opcionesContainer").append(
+                    $("<button>").on("click", () => {
+                        alert("CORRECTO")
+                        this.siguiente()
+                    })
+                    .html(acorde.toString())
+                )
+            } else {
+                $("#opcionesContainer").append(
+                    $("<button>").on("click", () => {
+                        alert("ERROR")
+                        this.siguiente()
+                    })
+                    .html(Aleatorio.getAcorde(Aleatorio.getNota()).toString())
+                )
+            }
+        }
     }
 
     siguiente() {
         $(".dedo").remove();
-        this.pintarNuevoAcorde();
+        $("#opcionesContainer").empty();
+        let acordeAleatorio = Aleatorio.getAcorde(Aleatorio.getNota());
+        this.pintarNuevoAcorde(acordeAleatorio);
+        this.pintarOpciones(acordeAleatorio);
     }
 }
 
 let juego = new Juego(guitarra);
-console.log(Aleatorio.getAcorde(Aleatorio.getNota()))

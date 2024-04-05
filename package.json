@@ -12,6 +12,7 @@
     "electron": "^28.2.8"
   },
   "dependencies": {
+    "materialize-css": "^1.0.0-rc.2",
     "tone": "^14.7.77"
   }
 }

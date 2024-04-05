@@ -3,14 +3,15 @@ header {
 }
 
 body {
-    background-color: #37503d;
+    background-color: #f5f5f5;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: large;
-    color: #fff;
+    color: #333;
+    margin: 0;
 }
 
-h2 {
+h1, h2 {
     text-align: center;
+    font-size: 3em;
 }
 
 button {
@@ -20,40 +21,51 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #1b5e20; 
+    background-color: #3498db; 
     color: white;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0d3317; 
+    background-color: #2980b9; 
 }
 
 button:active {
-    background-color: #001a00; 
+    background-color: #1f618d;
 }
 
 select {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
-    border: 1px solid #555; 
+    border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #222; 
-    color: white;
+    background-color: #f9f9f9;
+    color: #333;
     cursor: pointer;
     transition: border-color 0.3s, background-color 0.3s;
 }
 
 select:focus {
-    outline: none; 
-    border-color: #777; 
+    outline: none;
+    border-color: #999;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #titulos {
     display: flex;
     width: 80vw;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
 #titulos p {
@@ -63,11 +75,7 @@ select:focus {
 }
 
 #titulos p:nth-child(2) {
-    color: #ffe100;
-}
-
-#titulos p:last-child {
-    width: 80%;
+    color: #004599;
 }
 
 #guitarraContainer,
@@ -77,18 +85,17 @@ select:focus {
     height: 40vh;
 }
 
-
 #guitarra,
 #guitarraJuego {
     display: flex;
     width: 80%;
-    border-left: 6px solid #000;
-    background-color: #49351c; 
+    border-left: 6px solid #333;
+    background-color: #e0e0e0;
 }
 
 #guitarraNotasAfinacion,
 #guitarraNotasAcorde,
-#guitarraNotasJuego{
+#guitarraNotasJuego {
     display: flex;
     flex-direction: column-reverse;
     width: 10%;
@@ -104,13 +111,23 @@ select:focus {
 #guitarraNotasAcorde div {
     text-align: center;
     font-size: 2em;
-    color: #ffe100;
+    color: #004599;
+}
+
+#acordeForm {
+    display: flex;
+    justify-content: center;
+}
+
+#botonesConfig {
+    display: flex;
+    justify-content: center;
 }
 
 .cuerda {
     height: 0.75vh;
     width: 100%;
-    background-color: #777; 
+    background-color: #999;
     position: relative;
     cursor: pointer;
 }
@@ -120,7 +137,7 @@ select:focus {
     display: flex;
     width: auto;
     height: auto;
-    border: 1px solid #000;
+    border: 1px solid #333;
     flex-direction: column;
     justify-content: space-around;
 }
@@ -129,7 +146,7 @@ select:focus {
     margin: 0 auto;
     width: 3.5vw;
     height: 3.5vw;
-    background-color: #ffe100;
+    background-color: #004599;
     border-radius: 50%;
     position: absolute;
     top: 50%;

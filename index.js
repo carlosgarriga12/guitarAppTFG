@@ -1,18 +1,17 @@
 class GuitarApp {
     constructor() {
-        $(document).ready(() => {
+        $(() => {
             this.initEventListeners();
-        });
+        })
     }
 
     initEventListeners() {
-        $("#afinacionPredefinida").change(() => this.togglePersonalizadaContainer());
-
-        $("#agregarCuerda").click(() => this.agregarCuerda());
-
-        $("#eliminarUltimaCuerda").click(() => this.eliminarUltimaCuerda());
-
-        $("#afinacionForm").submit((event) => this.guardarAfinacion(event));
+        $("#afinacionPredefinida").on("change", this.togglePersonalizadaContainer.bind(this));
+        $("#agregarCuerda").on("click", this.agregarCuerda.bind(this));
+        $("#eliminarUltimaCuerda").on("click", this.eliminarUltimaCuerda.bind(this));
+        $("#afinacionForm").on("submit", (event) => {
+            this.guardarAfinacion(event);
+        });
     }
 
     togglePersonalizadaContainer() {
@@ -25,23 +24,30 @@ class GuitarApp {
 
     agregarCuerda() {
         let numCuerdas = $("#cuerdasContainer select").length / 2 + 1;
-        let nuevoCampo = `<div id="cuerda${numCuerdas}">
-                            <label for="personalizadaCuerda${numCuerdas}Nota">Nota Cuerda ${numCuerdas}:</label>
+        let nuevoCampo = `<div class="row" style="margin-bottom: 0;">
+            <div class="input-field col s6">
+                <div class="row" id="cuerda${numCuerdas}" style="margin-bottom: 0;">
+                    <div class="col s6">
+                        <div class="input-field">
                             <select name="personalizadaCuerda${numCuerdas}Nota" id="personalizadaCuerda${numCuerdas}Nota">
-                                <option value="C">C</option>
-                                <option value="C#">C#</option>
-                                <option value="D">D</option>
-                                <option value="D#">D#</option>
-                                <option value="E">E</option>
-                                <option value="F">F</option>
-                                <option value="F#">F#</option>
-                                <option value="G">G</option>
-                                <option value="G#">G#</option>
-                                <option value="A">A</option>
-                                <option value="A#">A#</option>
-                                <option value="B">B</option>
+                                <option value="C">C (Do)</option>
+                                <option value="C#">C# (Do#)</option>
+                                <option value="D">D (Re)</option>
+                                <option value="D#">D# (Re#)</option>
+                                <option value="E">E (Mi)</option>
+                                <option value="F">F (Fa)</option>
+                                <option value="F#">F# (Fa#)</option>
+                                <option value="G">G (Sol)</option>
+                                <option value="G#">G# (Sol#)</option>
+                                <option value="A">A (La)</option>
+                                <option value="A#">A# (La#)</option>
+                                <option value="B">B (Si)</option>
                             </select>
-                            <label for="personalizadaCuerda${numCuerdas}Octava">Octava Cuerda ${numCuerdas}:</label>
+                            <label for="personalizadaCuerda${numCuerdas}Nota">Nota Cuerda ${numCuerdas}:</label>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="input-field">
                             <select name="personalizadaCuerda${numCuerdas}Octava" id="personalizadaCuerda${numCuerdas}Octava">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -52,13 +58,20 @@ class GuitarApp {
                                 <option value="7">7</option>
                                 <option value="8">8</option>
                             </select>
-                        </div>`;
+                            <label for="personalizadaCuerda${numCuerdas}Octava">Octava Cuerda ${numCuerdas}:</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
         $("#cuerdasContainer").append(nuevoCampo);
         $("#eliminarUltimaCuerda").show();
+        $('select').formSelect();
     }
 
     eliminarUltimaCuerda() {
-        $("#cuerdasContainer div:last-child").remove();
+        $("#cuerdasContainer").children("div").last().remove();
         if ($("#cuerdasContainer select").length <= 8) {
             $("#eliminarUltimaCuerda").hide();
         }
@@ -67,17 +80,11 @@ class GuitarApp {
     guardarAfinacion(event) {
         event.preventDefault();
 
-        if ($("#afinacionPredefinida").val() === "personalizada" && $("#cuerdasContainer select").length === 0) {
-            alert("Debes añadir al menos una cuerda para una afinación personalizada.");
-            return;
-        }
-
         let afinacionData = {};
 
         if ($("#afinacionPredefinida").val() === "personalizada") {
             let notas = [];
-
-            $("#cuerdasContainer div").each(function () {
+            $("#cuerdasContainer").children("div").each(function () {
                 let notaCompleta = $(this).find("select[name^='personalizadaCuerda'] option:selected").text();
                 let nota = {
                     nombre: notaCompleta[0],
@@ -97,4 +104,7 @@ class GuitarApp {
     }
 }
 
-new GuitarApp();
+$(function () {
+    new GuitarApp();
+    $('select').formSelect();
+});
