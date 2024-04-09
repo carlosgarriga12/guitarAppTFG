@@ -10,20 +10,57 @@ class GuitarApp {
         $("#agregarCuerda").on("click", this.agregarCuerda.bind(this));
         $("#eliminarUltimaCuerda").on("click", this.eliminarUltimaCuerda.bind(this));
         $("#afinacionForm").on("submit", (event) => {
-            this.guardarAfinacion(event);
+            this.establecerAfinacion(event);
         });
+        $("#addAfinacionPersonalizada").on("click", this.addAfinacionPersonalizada.bind(this));
+    }
+
+    addAfinacionPersonalizada() {
+        let afinacionData = {};
+
+        if ($("#nombreAfinacion").val() === "") {
+            $("#mensajeErrorGuardarAfinacion")
+                        .html("<span style='color: red;'>Debes de escribir un nombre para guardar tu afinación</span>")
+                        .css("display", "block");
+        } else {
+            let notas = [];
+            $("#cuerdasContainer").children("div").each(function () {
+                let notaCompleta = $(this).find("select[name^='personalizadaCuerda'] option:selected").val();
+                let nota = {
+                    nombre: notaCompleta[0],
+                    octava: notaCompleta[1]
+                };
+                notas.push(nota);
+            });
+
+            afinacionData.notasPersonalizadas = notas;
+
+            let afinacionGuardada = localStorage.getItem($("#nombreAfinacion").val(), JSON.stringify(afinacionData));
+            
+            let afinacionObjeto = JSON.parse(afinacionGuardada);
+
+            // Imprimir el objeto en la consola
+            console.log(afinacionObjeto);
+
+        }
     }
 
     togglePersonalizadaContainer() {
         if ($("#afinacionPredefinida").val() === "personalizada") {
             $("#personalizadaContainer").show();
+            $("#nombreAfinacionContainer").show();
         } else {
             $("#personalizadaContainer").hide();
+            $("#nombreAfinacionContainer").hide();
         }
     }
 
     agregarCuerda() {
         let numCuerdas = $("#cuerdasContainer select").length / 2 + 1;
+        if (numCuerdas === 13) {
+            alert("No se pueden añadir más cuerdas")
+            return
+        }
         let nuevoCampo = `<div class="row" style="margin-bottom: 0;">
             <div class="input-field col s6">
                 <div class="row" id="cuerda${numCuerdas}" style="margin-bottom: 0;">
@@ -77,7 +114,7 @@ class GuitarApp {
         }
     }
 
-    guardarAfinacion(event) {
+    establecerAfinacion(event) {
         event.preventDefault();
 
         let afinacionData = {};
@@ -95,7 +132,7 @@ class GuitarApp {
 
             afinacionData.notasPersonalizadas = notas;
         } else {
-            afinacionData.afinacionPredefinida = $("#afinacionPredefinida").val();
+            afinacionData.afinacionNombre = $("#afinacionPredefinida").val();
         }
 
         localStorage.setItem("afinacionData", JSON.stringify(afinacionData));

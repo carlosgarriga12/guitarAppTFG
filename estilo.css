@@ -11,7 +11,7 @@ body {
 
 h1, h2 {
     text-align: center;
-    font-size: 3em;
+    font-size: 3vh;
 }
 
 button {
@@ -82,7 +82,7 @@ main {
 #containerJuego {
     display: flex;
     width: 80vw;
-    height: 40vh;
+    height: 60vh;
 }
 
 #guitarra,

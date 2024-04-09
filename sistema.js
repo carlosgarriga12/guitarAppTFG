@@ -208,7 +208,7 @@ class ServicioAfinacion {
         if (formDataJSON) {
             let formData = JSON.parse(formDataJSON);
 
-            if (formData.afinacionPredefinida === "estandar") {
+            if (formData.afinacionNombre === "estandar") {
                 return [
                     new Nota("E", "", 2),
                     new Nota("A", "", 2),
@@ -217,7 +217,7 @@ class ServicioAfinacion {
                     new Nota("B", "", 3),
                     new Nota("E", "", 4)
                 ];
-            } else if (formData.afinacionPredefinida === "dropD") {
+            } else if (formData.afinacionNombre === "dropD") {
                 return [
                     new Nota("D", "", 2),
                     new Nota("A", "", 2),
@@ -226,7 +226,7 @@ class ServicioAfinacion {
                     new Nota("B", "", 3),
                     new Nota("E", "", 4)
                 ];
-            } else if (formData.afinacionPredefinida === "openD") {
+            } else if (formData.afinacionNombre === "openD") {
                 return [
                     new Nota("D", "", 2),
                     new Nota("A", "", 2),
