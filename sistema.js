@@ -236,17 +236,39 @@ class ServicioAfinacion {
                     new Nota("D", "", 4)
                 ];
             } else {
-                let notas = [];
+                if (formData.afinacionNombre === "personalizada") {
+                    console.log("Afinación personalizada sin guardar")
+                    let notas = [];
 
-                formData.notasPersonalizadas.map(nota => {
-                    let alteracion = "";
-                    if (nota.nombre.length > 1) {
-                        alteracion = nota.nombre[1];
-                    }
-                    notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
-                })
+                    formData.notasPersonalizadas.map(nota => {
+                        let alteracion = "";
+                        if (nota.nombre.length > 1) {
+                            alteracion = nota.nombre[1];
+                        }
+                        notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
+                    })
 
-                return notas;
+                    return notas;
+                } else {
+                    console.log("Afinación personalizada guardada")
+                    let notas = [];
+                    let afinacionPersonalizada = localStorage.getItem("afinacionPersonalizada_" + formData.afinacionNombre);
+                    console.log(afinacionPersonalizada)
+                    let afinacionPersonalizadaJSON = JSON.parse(afinacionPersonalizada);
+                    console.log(afinacionPersonalizadaJSON)
+                    let notasJSON = afinacionPersonalizadaJSON.notasPersonalizadas;
+
+                    notasJSON.map(nota => {
+                        let alteracion = "";
+                        if (nota.nombre.length > 1) {
+                            alteracion = nota.nombre[1];
+                        }
+                        notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
+                    })
+
+                    return notas;
+                    
+                }
             }
         }
     }
@@ -485,20 +507,20 @@ class Juego {
                 $(id).append(posicion)
             }
         }
-        
+
     }
 
     pintarOpciones(acorde) {
         let numeroAleatorio = Math.floor(Math.random() * 3);
         console.log(numeroAleatorio)
-        for(let i = 0; i < 3; i++) {
-            if(i === numeroAleatorio) {
+        for (let i = 0; i < 3; i++) {
+            if (i === numeroAleatorio) {
                 $("#opcionesContainer").append(
                     $("<button>").on("click", () => {
                         alert("CORRECTO")
                         this.siguiente()
                     })
-                    .html(acorde.toString())
+                        .html(acorde.toString())
                 )
             } else {
                 $("#opcionesContainer").append(
@@ -506,7 +528,7 @@ class Juego {
                         alert("ERROR")
                         this.siguiente()
                     })
-                    .html(Aleatorio.getAcorde(Aleatorio.getNota()).toString())
+                        .html(Aleatorio.getAcorde(Aleatorio.getNota()).toString())
                 )
             }
         }

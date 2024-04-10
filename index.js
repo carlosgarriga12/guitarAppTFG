@@ -20,11 +20,11 @@ class GuitarApp {
 
         if ($("#nombreAfinacion").val() === "") {
             $("#mensajeErrorGuardarAfinacion")
-                        .html("<span style='color: red;'>Debes de escribir un nombre para guardar tu afinación</span>")
-                        .css("display", "block");
+                .html("<span style='color: red;'>Debes de escribir un nombre para guardar tu afinación</span>")
+                .css("display", "block");
         } else {
             let notas = [];
-            $("#cuerdasContainer").children("div").each(function(index) {
+            $("#cuerdasContainer").children("div").each(function (index) {
 
                 let nota = {
                     nombre: $(this).find("#personalizadaCuerda" + (index + 1) + "Nota").val(),
@@ -33,14 +33,16 @@ class GuitarApp {
 
                 notas.push(nota);
             });
-
+            let nombre = $("#nombreAfinacion").val()
             afinacionData.notasPersonalizadas = notas;
+            afinacionData.afinacionNombre = nombre;
+            localStorage.setItem("afinacionPersonalizada_" + nombre, JSON.stringify(afinacionData));
 
-            localStorage.setItem($("#nombreAfinacion").val(), JSON.stringify(afinacionData));
-            
-            let afinacionObjeto = localStorage.getItem($("#nombreAfinacion").val());
+            let afinacionObjeto = localStorage.getItem("afinacionPersonalizada_" + nombre);
 
             console.log(afinacionObjeto);
+            alert("Afinación " + nombre + " guardada correctamente");
+            window.location.reload();
         }
     }
 
@@ -103,7 +105,6 @@ class GuitarApp {
 
         $("#cuerdasContainer").append(nuevoCampo);
         $("#eliminarUltimaCuerda").show();
-
         $('select').formSelect();
     }
 
@@ -139,9 +140,25 @@ class GuitarApp {
 
         window.location.href = "config.html";
     }
+
+    cargarAfinacionesPersonalizadas() {
+        let selectElement = $("#afinacionPredefinida");
+
+        for (var i = 0; i < localStorage.length; i++) {
+            var clave = localStorage.key(i);
+            if (clave.match(/^afinacionPersonalizada_.*/)) {
+                let afinacionObjeto = localStorage.getItem(clave);
+                console.log("Elementos encontrado: \n", afinacionObjeto);
+                afinacionObjeto = JSON.parse(afinacionObjeto);
+                let nuevaAfinacion = $("<option>").html(afinacionObjeto.afinacionNombre);
+                selectElement.find("option[value='personalizada']").before(nuevaAfinacion);
+                
+            }
+        }
+    }
 }
 
 $(function () {
-    new GuitarApp();
+    new GuitarApp().cargarAfinacionesPersonalizadas();
     $('select').formSelect();
 });
