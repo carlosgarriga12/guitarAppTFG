@@ -51,8 +51,19 @@ class GuitarApp {
             $("#personalizadaContainer").show();
             $("#nombreAfinacionContainer").show();
         } else {
-            $("#personalizadaContainer").hide();
-            $("#nombreAfinacionContainer").hide();
+            if (
+                ($("#afinacionPredefinida").val() === "estandar") ||
+                ($("#afinacionPredefinida").val() === "dropD") ||
+                ($("#afinacionPredefinida").val() === "openD") 
+            ) {
+                $("#personalizadaContainer").hide();
+                $("#nombreAfinacionContainer").hide();
+            } else {
+                //Mostrar las cuerdas y el nombre de la afinación y 
+                //rellenar con los datos del JSON guardado en memoria
+                //rellenarDatosAfinacionGuardada();
+            }
+            
         }
     }
 
