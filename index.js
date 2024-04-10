@@ -24,24 +24,23 @@ class GuitarApp {
                         .css("display", "block");
         } else {
             let notas = [];
-            $("#cuerdasContainer").children("div").each(function () {
-                let notaCompleta = $(this).find("select[name^='personalizadaCuerda'] option:selected").val();
+            $("#cuerdasContainer").children("div").each(function(index) {
+
                 let nota = {
-                    nombre: notaCompleta[0],
-                    octava: notaCompleta[1]
+                    nombre: $(this).find("#personalizadaCuerda" + (index + 1) + "Nota").val(),
+                    octava: $(this).find("#personalizadaCuerda" + (index + 1) + "Octava").val()
                 };
+
                 notas.push(nota);
             });
 
             afinacionData.notasPersonalizadas = notas;
 
-            let afinacionGuardada = localStorage.getItem($("#nombreAfinacion").val(), JSON.stringify(afinacionData));
+            localStorage.setItem($("#nombreAfinacion").val(), JSON.stringify(afinacionData));
             
-            let afinacionObjeto = JSON.parse(afinacionGuardada);
+            let afinacionObjeto = localStorage.getItem($("#nombreAfinacion").val());
 
-            // Imprimir el objeto en la consola
             console.log(afinacionObjeto);
-
         }
     }
 
@@ -104,6 +103,7 @@ class GuitarApp {
 
         $("#cuerdasContainer").append(nuevoCampo);
         $("#eliminarUltimaCuerda").show();
+
         $('select').formSelect();
     }
 
