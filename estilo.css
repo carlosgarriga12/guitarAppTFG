@@ -82,7 +82,7 @@ main {
 #containerJuego {
     display: flex;
     width: 80vw;
-    height: 60vh;
+    height: 40vh;
 }
 
 #guitarra,
@@ -122,6 +122,12 @@ main {
 #botonesConfig {
     display: flex;
     justify-content: center;
+}
+
+#botoneraSeleccionarAcordes {
+    display: flex;
+    justify-content: center;
+    
 }
 
 .cuerda {

@@ -43,6 +43,7 @@ class GuitarApp {
             console.log(afinacionObjeto);
             alert("Afinación " + nombre + " guardada correctamente");
             window.location.reload();
+
         }
     }
 
@@ -59,12 +60,33 @@ class GuitarApp {
                 $("#personalizadaContainer").hide();
                 $("#nombreAfinacionContainer").hide();
             } else {
-                //Mostrar las cuerdas y el nombre de la afinación y 
-                //rellenar con los datos del JSON guardado en memoria
-                //rellenarDatosAfinacionGuardada();
+                
+                $("#personalizadaContainer").show();
+                $("#nombreAfinacionContainer").show();
+                this.rellenarDatosAfinacionGuardada("afinacionPersonalizada_" + $("#afinacionPredefinida").val());
+
             }
-            
         }
+    }
+
+    rellenarDatosAfinacionGuardada(nombreLocalAfinacion) {
+        let afinacionObjeto = localStorage.getItem(nombreLocalAfinacion);
+        afinacionObjeto = JSON.parse(afinacionObjeto)
+        let numNotas = afinacionObjeto["notasPersonalizadas"].length;
+
+        if (numNotas > 4) {
+            let notasParaCompletar = numNotas - 4;
+            for (let i = 0; i < notasParaCompletar; i++) {
+                this.agregarCuerda();
+            }
+        }
+
+        $("#cuerdasContainer").children("div").each(function (index) {
+            $(this).find("#personalizadaCuerda" + (index + 1) + "Nota").val(afinacionObjeto.notasPersonalizadas[index].nombre).formSelect();
+            $(this).find("#personalizadaCuerda" + (index + 1) + "Octava").val(afinacionObjeto.notasPersonalizadas[index].octava).formSelect();
+        });
+        $("#nombreAfinacion").val(nombreLocalAfinacion.replace("afinacionPersonalizada_", "")).trigger("focus");
+
     }
 
     agregarCuerda() {

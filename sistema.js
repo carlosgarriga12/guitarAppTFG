@@ -139,7 +139,9 @@ class Guitarra {
         return this.afinacion;
     }
 
-    pintarAcorde(posicionDedos) {
+    pintarAcorde(combinaciones, nCombinacion) {
+        let posicionDedos = combinaciones[nCombinacion];
+
         for (let i = 0; i < posicionDedos.length; i++) {
             let notaInicial = this.afinacion[i];
 
@@ -184,22 +186,70 @@ class Guitarra {
     }
 
     buscarAcorde(notasAcorde) {
-        let posicionDedos = []
-        let notasPorEncontrar = [...notasAcorde];
-        //Busca por cada cuerda la próxima nota que coincida con el acorde dado
-        //Mejorar algoritmo y realizar pruebas
-        for (let i = 0; i < this.afinacion.length; i++) {
-            loop:
-            for (let j = 0; j < this.trastes; j++) {
-                if (notasAcorde.includes(this.mastil[i][j].getName())) {
-                    posicionDedos.push(j);
-                    break loop;
+        const cantidadCuerdas = this.afinacion.length;
+
+        let trastesPorCuerda = [];
+        for (let i = 0; i < cantidadCuerdas; i++) {
+            let trastesEnCuerda = [];
+            for (let j = 0; j < this.mastil[i].length; j++) {
+                let notaEnTraste = this.mastil[i][j].getName();
+                if (notasAcorde.includes(notaEnTraste)) {
+                    trastesEnCuerda.push(j);
+                }
+            }
+            trastesPorCuerda.push(trastesEnCuerda);
+        }
+
+        console.log("Trastes por cuerda")
+        console.log(trastesPorCuerda);
+
+
+        // Encontrar combinaciones de posiciones de dedos donde todas las notas del acorde estén presentes
+        let combinaciones = [];
+        let indices = new Array(cantidadCuerdas).fill(0);
+        while (indices[cantidadCuerdas - 1] < trastesPorCuerda[cantidadCuerdas - 1].length) {
+            let posicionesDedos = [];
+            for (let i = 0; i < cantidadCuerdas; i++) {
+                let traste = trastesPorCuerda[i][indices[i]];
+                posicionesDedos.push(traste); // Almacenamos la posición de los dedos (traste)
+            }
+            combinaciones.push(posicionesDedos);
+            indices[0]++;
+            for (let i = 0; i < cantidadCuerdas - 1; i++) {
+                if (indices[i] === trastesPorCuerda[i].length) {
+                    indices[i] = 0;
+                    indices[i + 1]++;
+                }
+            }
+            if (indices[cantidadCuerdas - 1] >= trastesPorCuerda[cantidadCuerdas - 1].length) {
+                break; // Salir del bucle si alcanzamos el límite de la última cuerda
+            }
+        }
+
+        const limiteDistanciaMaxima = 4;
+
+        let combinacionesFiltradas = combinaciones.filter(combinacion => {
+            return this.calcularDistanciaMaxima(combinacion) <= limiteDistanciaMaxima;
+        });
+
+        console.log("Combinaciones filtradas:");
+        console.log(combinacionesFiltradas);
+
+        return combinacionesFiltradas;
+    }
+
+    calcularDistanciaMaxima(combinacion) {
+        let distanciaMaxima = 0;
+        for (let i = 0; i < combinacion.length - 1; i++) {
+            for (let j = i + 1; j < combinacion.length; j++) {
+                let distancia = Math.abs(combinacion[i] - combinacion[j]);
+                if (distancia > distanciaMaxima) {
+                    distanciaMaxima = distancia;
                 }
             }
         }
-        return posicionDedos;
+        return distanciaMaxima;
     }
-
 }
 
 class ServicioAfinacion {
@@ -267,7 +317,7 @@ class ServicioAfinacion {
                     })
 
                     return notas;
-                    
+
                 }
             }
         }
@@ -366,7 +416,8 @@ class Acorde {
 }
 
 let acordeActual = new Acorde(new Nota("C", "", 3), Acordes.Mayor);
-guitarra.pintarAcorde(guitarra.buscarAcorde(acordeActual.getNotas()))
+let acordeNum = 0;
+guitarra.pintarAcorde(guitarra.buscarAcorde(acordeActual.getNotas()), acordeNum)
 
 const synth = new Tone.PolySynth(Tone.Synth, {
     volume: -5,
@@ -400,7 +451,32 @@ function irAJuego() {
     window.location.href = "juego.html";
 }
 
-$(document).ready(function () {
+function siguienteAcorde() {
+    let notasAcorde = acordeActual.getNotas();
+    acordeNum++;
+    if (acordeNum === guitarra.buscarAcorde(notasAcorde).length) {
+        acordeNum = 0; 
+    }
+    $(".dedo").remove();
+    $(".notaAcorde").remove();
+
+    guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
+}
+
+function anteriorAcorde() {
+    let notasAcorde = acordeActual.getNotas();
+    acordeNum--;
+    if (acordeNum === -1) {
+        acordeNum = guitarra.buscarAcorde(notasAcorde).length - 1; 
+    }
+
+    $(".dedo").remove();
+    $(".notaAcorde").remove();
+
+    guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
+}
+
+$(function() {
     $("#acordeForm select").change(function () {
         let notaBase = $("#notaBase").val();
         let tipoAcorde = $("#tipoAcorde").val();
@@ -417,8 +493,8 @@ $(document).ready(function () {
 
         $(".dedo").remove();
         $(".notaAcorde").remove();
-
-        guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde));
+        acordeNum = 0;
+        guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
     });
 });
 
