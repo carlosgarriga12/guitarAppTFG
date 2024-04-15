@@ -203,17 +203,27 @@ class Guitarra {
         console.log("Trastes por cuerda")
         console.log(trastesPorCuerda);
 
-
-        // Encontrar combinaciones de posiciones de dedos donde todas las notas del acorde estén presentes
         let combinaciones = [];
         let indices = new Array(cantidadCuerdas).fill(0);
         while (indices[cantidadCuerdas - 1] < trastesPorCuerda[cantidadCuerdas - 1].length) {
             let posicionesDedos = [];
             for (let i = 0; i < cantidadCuerdas; i++) {
                 let traste = trastesPorCuerda[i][indices[i]];
-                posicionesDedos.push(traste); // Almacenamos la posición de los dedos (traste)
+                posicionesDedos.push(traste);
             }
-            combinaciones.push(posicionesDedos);
+
+            //combinaciones.push(posicionesDedos);
+            // Verificar si todas las notas del acorde están presentes en la combinación
+            let todasLasNotasPresentes = notasAcorde.every(nota => {
+                return posicionesDedos.some((traste, cuerda) => {
+                    return this.obtenerTrastePorNota(nota, cuerda) === traste;
+                });
+            });
+
+            if (todasLasNotasPresentes) {
+                combinaciones.push(posicionesDedos);
+            }
+
             indices[0]++;
             for (let i = 0; i < cantidadCuerdas - 1; i++) {
                 if (indices[i] === trastesPorCuerda[i].length) {
@@ -222,11 +232,11 @@ class Guitarra {
                 }
             }
             if (indices[cantidadCuerdas - 1] >= trastesPorCuerda[cantidadCuerdas - 1].length) {
-                break; // Salir del bucle si alcanzamos el límite de la última cuerda
+                break;
             }
         }
 
-        const limiteDistanciaMaxima = 4;
+        const limiteDistanciaMaxima = 3;
 
         let combinacionesFiltradas = combinaciones.filter(combinacion => {
             return this.calcularDistanciaMaxima(combinacion) <= limiteDistanciaMaxima;
@@ -236,6 +246,18 @@ class Guitarra {
         console.log(combinacionesFiltradas);
 
         return combinacionesFiltradas;
+    }
+
+    obtenerTrastePorNota(nota, cuerda) {
+        const cantidadTrastes = this.mastil[cuerda].length;
+    
+        for (let traste = 0; traste < cantidadTrastes; traste++) {
+            if (this.mastil[cuerda][traste].getName() === nota) {
+                return traste; 
+            }
+        }
+    
+        return -1;
     }
 
     calcularDistanciaMaxima(combinacion) {
