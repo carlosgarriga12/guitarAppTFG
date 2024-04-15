@@ -13,6 +13,14 @@ class GuitarApp {
             this.establecerAfinacion(event);
         });
         $("#addAfinacionPersonalizada").on("click", this.addAfinacionPersonalizada.bind(this));
+        $("#eliminarAfinacionPersonalizada").on("click", function() {
+            if (confirm("¿Estás seguro de que deseas eliminar la afinación " + $("#afinacionPredefinida").val() + "?")) {
+                localStorage.removeItem("afinacionPersonalizada_" + $("#afinacionPredefinida").val());
+                window.location.reload();
+            } else {
+                return;
+            }
+        });
     }
 
     addAfinacionPersonalizada() {
@@ -64,7 +72,7 @@ class GuitarApp {
                 $("#personalizadaContainer").show();
                 $("#nombreAfinacionContainer").show();
                 this.rellenarDatosAfinacionGuardada("afinacionPersonalizada_" + $("#afinacionPredefinida").val());
-
+                $("#eliminarAfinacionPersonalizada").show();
             }
         }
     }
@@ -92,7 +100,7 @@ class GuitarApp {
     agregarCuerda() {
         let numCuerdas = $("#cuerdasContainer select").length / 2 + 1;
         if (numCuerdas === 13) {
-            alert("No se pueden añadir más cuerdas")
+            alert("Límite de cuerdas máximas alcanzadas")
             return
         }
         let nuevoCampo = `<div class="row" style="margin-bottom: 0;">

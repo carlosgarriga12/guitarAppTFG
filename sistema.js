@@ -140,6 +140,9 @@ class Guitarra {
     }
 
     pintarAcorde(combinaciones, nCombinacion) {
+        if(combinaciones.length === 0) {
+            alert("No se han encontrado combinaciones posibles en la afinación actual")
+        }
         let posicionDedos = combinaciones[nCombinacion];
 
         for (let i = 0; i < posicionDedos.length; i++) {
