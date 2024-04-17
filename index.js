@@ -18,7 +18,7 @@ class GuitarApp {
         $("#eliminarAfinacionPersonalizada").on("click", () => {
             if (confirm("¿Estás seguro de que deseas eliminar la afinación " + $("#afinacionPredefinida").val() + "?")) {
                 localStorage.removeItem("afinacionPersonalizada_" + $("#afinacionPredefinida").val());
-                location.reload(true);
+                window.location.reload();
                 this.cargarAfinacionesPersonalizadas();
             } else {
                 return;
@@ -53,8 +53,7 @@ class GuitarApp {
 
             console.log(afinacionObjeto);
             alert("Afinación " + nombre + " guardada correctamente");
-            //location.reload(true);
-            
+            window.location.reload();
         }
     }
 

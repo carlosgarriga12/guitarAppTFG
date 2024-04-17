@@ -141,8 +141,8 @@ class Guitarra {
 
     pintarAcorde(combinaciones, nCombinacion) {
         if(combinaciones.length === 0) {
-            alert("No se han encontrado combinaciones posibles en la afinación actual")
-        }
+            alert("No se han encontrado combinaciones posibles en la afinación actual");
+        } 
         let posicionDedos = combinaciones[nCombinacion];
 
         for (let i = 0; i < posicionDedos.length; i++) {
@@ -502,7 +502,7 @@ function anteriorAcorde() {
 }
 
 $(function() {
-    $("#acordeForm select").change(function () {
+    $("#acordeForm select").on("change", function () {
         let notaBase = $("#notaBase").val();
         let tipoAcorde = $("#tipoAcorde").val();
 
@@ -577,6 +577,11 @@ class Juego {
 
     comenzar() {
         $("#juegoContainer button").remove();
+        $("#juegoContainer").append($("<div>").attr("id", "estadoJuego"))
+        $("#estadoJuego").append($("<div>").attr("id", "puntuacion"))
+        this.inicializarPuntuacion();
+        $("#estadoJuego").append($("<div>").attr("id", "temporizador"))
+        this.inicializarTemporizador();
         $("#juegoContainer").append($("<div>").attr("id", "containerJuego"))
         $("#containerJuego").append($("<div>").attr("id", "guitarraNotasJuego"))
         this.pintarAfinacionActual();
@@ -594,7 +599,8 @@ class Juego {
     }
 
     pintarNuevoAcorde(acorde) {
-        let posicionDedos = this.guitarra.buscarAcorde(acorde.getNotas())
+        let combinacionesAcordes = this.guitarra.buscarAcorde(acorde.getNotas())
+        let posicionDedos = combinacionesAcordes[Math.floor(Math.random() * combinacionesAcordes.length)];
 
         for (let i = 0; i < posicionDedos.length; i++) {
             let notaInicial = this.guitarra.afinacion[i];
@@ -618,7 +624,8 @@ class Juego {
             if (i === numeroAleatorio) {
                 $("#opcionesContainer").append(
                     $("<button>").on("click", () => {
-                        alert("CORRECTO")
+                        this.puntuacion += 100; 
+                        $("#puntuacion").html("Puntuación: " + this.puntuacion)
                         this.siguiente()
                     })
                         .html(acorde.toString())
@@ -626,7 +633,8 @@ class Juego {
             } else {
                 $("#opcionesContainer").append(
                     $("<button>").on("click", () => {
-                        alert("ERROR")
+                        this.puntuacion -= 100; 
+                        $("#puntuacion").html("Puntuación: " + this.puntuacion)
                         this.siguiente()
                     })
                         .html(Aleatorio.getAcorde(Aleatorio.getNota()).toString())
@@ -641,6 +649,39 @@ class Juego {
         let acordeAleatorio = Aleatorio.getAcorde(Aleatorio.getNota());
         this.pintarNuevoAcorde(acordeAleatorio);
         this.pintarOpciones(acordeAleatorio);
+    }
+
+    inicializarPuntuacion() {
+        let puntuacionDiv = $("#puntuacion");
+
+        puntuacionDiv.html("Puntuación: " + this.puntuacion);
+    }
+
+    inicializarTemporizador() {
+        let temporizadorDiv = $("#temporizador");
+    
+        let tiempoInicial = 120;
+    
+        let minutos = Math.floor(tiempoInicial / 60);
+        let segundos = tiempoInicial % 60;
+        let tiempoFormateado = minutos.toString().padStart(2, '0') + ":" + segundos.toString().padStart(2, '0');
+        temporizadorDiv.html(tiempoFormateado);
+    
+        let temporizadorInterval = setInterval(function() {
+            tiempoInicial--;
+    
+            if (tiempoInicial <= 0) {
+                clearInterval(temporizadorInterval); 
+                temporizadorDiv.html("¡Tiempo agotado!");
+                return;
+            }
+    
+            minutos = Math.floor(tiempoInicial / 60);
+            segundos = tiempoInicial % 60;
+            tiempoFormateado = minutos.toString().padStart(2, '0') + ":" + segundos.toString().padStart(2, '0');
+    
+            temporizadorDiv.html(tiempoFormateado);
+        }, 1000);
     }
 }
 

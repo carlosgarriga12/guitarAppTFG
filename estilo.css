@@ -9,7 +9,8 @@ body {
     margin: 0;
 }
 
-h1, h2 {
+h1,
+h2 {
     text-align: center;
     font-size: 3vh;
 }
@@ -21,13 +22,13 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #3498db; 
+    background-color: #3498db;
     color: white;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #2980b9; 
+    background-color: #2980b9;
 }
 
 button:active {
@@ -127,8 +128,52 @@ main {
 #botoneraSeleccionarAcordes {
     display: flex;
     justify-content: center;
-    
+
 }
+
+#opcionesContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}
+
+#opcionesContainer button {
+    flex: 1;
+    max-width: 33%;
+    font-size: 4vw;
+    padding: 10px;
+}
+
+#estadoJuego {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#temporizador {
+    flex: 1;
+    font-size: 3vh;
+    padding: 10px;
+    margin: 10px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: right;
+}
+
+#puntuacion {
+    flex: 1;
+    font-size: 3vh;
+    padding: 10px;
+    margin: 10px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+}
+
 
 .cuerda {
     height: 0.75vh;
