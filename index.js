@@ -87,6 +87,7 @@ class GuitarApp {
                 $('select').formSelect();
             }
         }
+        $("select").formSelect();
     }
 
     rellenarDatosAfinacionGuardada(nombreLocalAfinacion) {

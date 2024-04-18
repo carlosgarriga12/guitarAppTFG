@@ -145,6 +145,12 @@ main {
     padding: 10px;
 }
 
+#configContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
 #estadoJuego {
     display: flex;
     justify-content: flex-end;
