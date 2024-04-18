@@ -185,6 +185,7 @@ class GuitarApp {
             });
 
             afinacionData.notasPersonalizadas = notas;
+            afinacionData.afinacionNombre = "personalizada";
         } else {
             afinacionData.afinacionNombre = $("#afinacionPredefinida").val();
         }
