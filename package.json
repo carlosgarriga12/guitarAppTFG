@@ -4,12 +4,14 @@
   "description": "Prueba de proyecto con electronJS",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "jest"
   },
   "author": "Carlos Garriga Suárez",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^28.2.8"
+    "electron": "^28.2.8",
+    "jest": "^29.7.0"
   },
   "dependencies": {
     "materialize-css": "^1.0.0-rc.2",

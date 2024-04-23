@@ -148,7 +148,7 @@ main {
 #configContainer {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
 }
 
 #estadoJuego {
@@ -209,4 +209,44 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.punto {
+    position: relative;
+}
+
+.punto::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgb(53, 53, 53);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.doble-punto {
+    position: relative;
+}
+
+.doble-punto::after,
+.doble-punto::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: rgb(53, 53, 53);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.doble-punto::after {
+    top: 33%;
+}
+
+.doble-punto::before {
+    top: 66%;
 }
