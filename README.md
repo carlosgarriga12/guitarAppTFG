@@ -14,3 +14,9 @@ Para iniciar la aplicación solamente tienes que ejecutar en la línea de comand
 ```bash
 npm start
 ```
+## Ejecutar los tests de la aplicación
+
+Para ejecutar el suite de tests de la aplicación usa el siguiente comando en la carpeta raíz del proyecto:
+```bash
+npm test
+```

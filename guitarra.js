@@ -1,5 +1,11 @@
 class Guitarra {
     constructor(afinacion) {
+        if (afinacion.length > 12) {
+            throw new Error('La afinación no puede tener más de 12 notas');
+        }
+        if (afinacion.length < 4) {
+            throw new Error('La afinación no puede tener menos de 4 notas');
+        }
         this.afinacion = afinacion;
         this.mastil = [];
         this.trastes = 12;
@@ -157,3 +163,5 @@ class Guitarra {
         return distanciaMaxima;
     }
 }
+
+module.exports = { Guitarra };
