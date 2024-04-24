@@ -72,3 +72,43 @@ describe('Dada una nota', () => {
         });
     });
 });
+
+describe('Dada una nota C4', () => {
+    describe('quiero obtener una nota a una distancia ascendente de n semitonos', () => {
+        it('debería devolver la misma nota correctamente para 0 semitonos', () => {
+            const nota1 = new Nota('C', '', 4);
+            const siguienteNota1 = nota1.calculaSiguienteNota(0);
+            expect(siguienteNota1).toBeInstanceOf(Nota);
+            expect(siguienteNota1.nombre).toBe('C');
+            expect(siguienteNota1.alteracion).toBe('');
+            expect(siguienteNota1.octava).toBe(4);
+        });
+
+        it('debería devolver C#4 para 1 semitono', () => {
+            const nota2 = new Nota('C', '', 4);
+            const siguienteNota2 = nota2.calculaSiguienteNota(1);
+            expect(siguienteNota2).toBeInstanceOf(Nota);
+            expect(siguienteNota2.nombre).toBe('C');
+            expect(siguienteNota2.alteracion).toBe('#');
+            expect(siguienteNota2.octava).toBe(4);
+        });
+
+        it('debería devolver D4 para 2 semitonos', () => {
+            const nota3 = new Nota('C', '', 4);
+            const siguienteNota3 = nota3.calculaSiguienteNota(2);
+            expect(siguienteNota3).toBeInstanceOf(Nota);
+            expect(siguienteNota3.nombre).toBe('D');
+            expect(siguienteNota3.alteracion).toBe('');
+            expect(siguienteNota3.octava).toBe(4);
+        });
+
+        it('debería devolver C5 para 12 semitonos (una octava completa)', () => {
+            const nota4 = new Nota('C', '', 4);
+            const siguienteNota4 = nota4.calculaSiguienteNota(12);
+            expect(siguienteNota4).toBeInstanceOf(Nota);
+            expect(siguienteNota4.nombre).toBe('C');
+            expect(siguienteNota4.alteracion).toBe('');
+            expect(siguienteNota4.octava).toBe(5);
+        });
+    })
+})

@@ -113,16 +113,6 @@ class Nota {
         }
     }
 
-    intervaloCon(otraNota) {
-        const nombres = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
-        let indice1 = nombres.indexOf(this.nombre);
-        let indice2 = nombres.indexOf(otraNota.nombre);
-
-        let distancia = Math.abs(indice2 - indice1);
-
-        return distancia;
-    }
-
     calculaSiguienteNota(semitonos) {
         let nota = this;
         for (let i = 0; i < semitonos; i++) {
