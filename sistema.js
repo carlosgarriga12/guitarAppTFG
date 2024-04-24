@@ -204,6 +204,12 @@ class Juego {
             let traste = $('<div>')
                 .addClass("traste")
                 .attr("id", "traste" + i);
+            if(i == 2 || i == 4 || i == 6 || i == 8) {
+                traste.addClass("punto");
+            }
+            else if(i == 11) {
+                traste.addClass("doble-punto");
+            }
             elementoGuitarra.append(traste);
             for (let j = this.guitarra.afinacion.length - 1; j >= 0; j--) {
                 let cuerda = $('<div>')

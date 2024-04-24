@@ -134,7 +134,6 @@ class Guitarra {
 
         console.log("Combinaciones filtradas:");
         console.log(combinacionesFiltradas);
-
         return combinacionesFiltradas;
     }
 
@@ -153,7 +152,9 @@ class Guitarra {
     calcularDistanciaMaxima(combinacion) {
         let distanciaMaxima = 0;
         for (let i = 0; i < combinacion.length - 1; i++) {
+            if(combinacion[i] === 0) continue;
             for (let j = i + 1; j < combinacion.length; j++) {
+                if(combinacion[j] === 0) continue;
                 let distancia = Math.abs(combinacion[i] - combinacion[j]);
                 if (distancia > distanciaMaxima) {
                     distanciaMaxima = distancia;
