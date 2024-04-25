@@ -245,6 +245,9 @@ class Juego {
         $("#juegoContainer").append($("<button>").on("click", () => {
             window.location.href = "index.html";
         }).html("Cambiar la configuración"))
+        $("#juegoContainer").append($("<button>").on("click", () => {
+            window.location.href = "config.html";
+        }).html("Volver a la generación de acordes"))
 
         let opcionesContainer = $("<div>").attr("id", "opcionesContainer");
         $("#juegoContainer").append(opcionesContainer)
