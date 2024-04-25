@@ -20,3 +20,11 @@ Para ejecutar el suite de tests de la aplicación usa el siguiente comando en la
 ```bash
 npm test
 ```
+
+## Web donde podréis ver la aplicación
+
+Tenéis disponible la página web de la aplicación en el siguiente enlace 
+
+https://carlosgarriga12.github.io/guitarAppTFG/
+
+Aunque no esté pensada para web, si no más bien como aplicación de escritorio así podréis ver como es.
