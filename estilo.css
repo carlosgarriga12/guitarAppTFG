@@ -75,8 +75,10 @@ main {
     font-size: 1.25em;
 }
 
-#titulos p:nth-child(2) {
-    color: #004599;
+#titulos div {
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
 }
 
 #guitarraContainer,
@@ -118,6 +120,7 @@ main {
 #acordeForm {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 #botonesConfig {
@@ -125,10 +128,18 @@ main {
     justify-content: center;
 }
 
-#botoneraSeleccionarAcordes {
+#configuracionAcorde {
     display: flex;
     justify-content: center;
+}
 
+#botoneraSeleccionarAcordes {
+    display: flex;
+    justify-content: space-between;
+}
+
+#botoneraSeleccionarAcordes button{
+    flex-grow: 1;
 }
 
 #opcionesContainer {

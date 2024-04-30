@@ -53,7 +53,7 @@ class GuitarApp {
 
             console.log(afinacionObjeto);
             alert("Afinación " + nombre + " guardada correctamente");
-            window.location.reload();
+            this.establecerAfinacion(null);
         }
     }
 
@@ -112,6 +112,7 @@ class GuitarApp {
         });
 
         $("#nombreAfinacion").val(nombreLocalAfinacion.replace("afinacionPersonalizada_", "")).trigger("focus");
+
     }
 
     agregarCuerda() {
@@ -157,7 +158,7 @@ class GuitarApp {
             </div>`;
 
         $("#cuerdasContainer").append(nuevoCampo);
-        if(numCuerdas > 4) {
+        if (numCuerdas > 4) {
             $("#eliminarUltimaCuerda").show();
         }
         $('select').formSelect();
@@ -171,7 +172,9 @@ class GuitarApp {
     }
 
     establecerAfinacion(event) {
-        event.preventDefault();
+        if(event !== null) {
+            event.preventDefault();
+        }
 
         let afinacionData = {};
 
