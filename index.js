@@ -59,6 +59,8 @@ class GuitarApp {
 
     limpiarCamposPersonalizada() {
         $("#nombreAfinacion").val("");
+        //$("nombreAfinacion").next().removeClass("active");
+        M.updateTextFields();
         $("#cuerdasContainer").empty();
         for (let i = 0; i < 4; i++) {
             this.agregarCuerda();
@@ -68,11 +70,13 @@ class GuitarApp {
     togglePersonalizadaContainer() {
         if ($("#afinacionPredefinida").val() === "personalizada") {
             this.limpiarCamposPersonalizada();
+            $("#nombreAfinacion").next().addClass("active");                
             $("#nombreAfinacionContainer").show();
             $("#personalizadaContainer").show();
             $("#agregarCuerda").show();
             $("#addAfinacionPersonalizada").show();
-            $("#nombreAfinacion").prop("disabled", false);
+            $("#eliminarAfinacionPersonalizada").hide();
+            $("#eliminarUltimaCuerda").hide();
         } else {
             if (
                 ($("#afinacionPredefinida").val() === "estandar") ||
@@ -81,7 +85,13 @@ class GuitarApp {
             ) {
                 $("#personalizadaContainer").hide();
                 $("#nombreAfinacionContainer").hide();
+                $("#eliminarAfinacionPersonalizada").hide();
+                $("#agregarCuerda").hide();
+                $("#eliminarUltimaCuerda").hide();
+                $("#addAfinacionPersonalizada").hide();
+
             } else {
+                M.updateTextFields();
                 $("#personalizadaContainer").show();
                 $("#nombreAfinacionContainer").show();
                 this.rellenarDatosAfinacionGuardada("afinacionPersonalizada_" + $("#afinacionPredefinida").val());
@@ -111,7 +121,9 @@ class GuitarApp {
             $(this).find("#personalizadaCuerda" + (index + 1) + "Octava").val(afinacionObjeto.notasPersonalizadas[index].octava).formSelect();
         });
 
-        $("#nombreAfinacion").val(nombreLocalAfinacion.replace("afinacionPersonalizada_", "")).trigger("focus");
+        $("#nombreAfinacion").val(nombreLocalAfinacion.replace("afinacionPersonalizada_", ""));
+        $("#nombreAfinacion").next().removeClass("active");
+        M.updateTextFields();
 
     }
 
@@ -161,6 +173,7 @@ class GuitarApp {
         if (numCuerdas > 4) {
             $("#eliminarUltimaCuerda").show();
         }
+        M.updateTextFields();
         $('select').formSelect();
     }
 
@@ -169,6 +182,8 @@ class GuitarApp {
         if ($("#cuerdasContainer select").length <= 8) {
             $("#eliminarUltimaCuerda").hide();
         }
+        M.updateTextFields();
+        $('select').formSelect();
     }
 
     establecerAfinacion(event) {
@@ -198,6 +213,7 @@ class GuitarApp {
         localStorage.setItem("afinacionData", JSON.stringify(afinacionData));
 
         window.location.href = "config.html";
+        
     }
 
     cargarAfinacionesPersonalizadas() {
@@ -220,4 +236,5 @@ class GuitarApp {
 $(function () {
     new GuitarApp().cargarAfinacionesPersonalizadas();
     $('select').formSelect();
+    M.updateTextFields();
 });
