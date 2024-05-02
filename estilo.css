@@ -81,7 +81,7 @@ main {
 #titulos div {
     width: 80%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 #guitarraContainer,
@@ -138,15 +138,6 @@ main {
 #configuracionAcorde {
     display: flex;
     justify-content: center;
-}
-
-#botoneraSeleccionarAcordes {
-    display: flex;
-    justify-content: space-between;
-}
-
-#botoneraSeleccionarAcordes button{
-    flex-grow: 1;
 }
 
 #opcionesContainer {
