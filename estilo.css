@@ -128,11 +128,7 @@ main {
 
 #botonesConfig {
     display: flex;
-    justify-content: space-around;
-}
-
-#botonesConfig button {
-    flex-grow: 1;
+    justify-content: center;
 }
 
 #configuracionAcorde {
