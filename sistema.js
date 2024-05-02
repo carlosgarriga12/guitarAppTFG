@@ -84,4 +84,5 @@ $(function() {
         acordeNum = 0;
         guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
     });
+    $('select').formSelect();
 });

@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
-    <!--<link rel="stylesheet" href="lib/materialize/materialize.min.css">-->
+    <link rel="stylesheet" href="lib/materialize/materialize.min.css">
     <link rel="stylesheet" href="estilo.css">
 </head>
 
@@ -58,22 +58,26 @@
             <div id="titulos">
                 <p>Afinación</p>
                 <p>Acorde</p>
-                <div id="botoneraSeleccionarAcordes">
-                    <button onclick="anteriorAcorde()" id="izquierda" class="btn waves-effect waves-light">Anterior</button>
-                    <button onclick="siguienteAcorde()" id="derecha" class="btn waves-effect waves-light">Siguiente</button>
-                </div>
             </div>
             <div id="guitarraContainer">
                 <div id="guitarraNotasAfinacion"></div>
                 <div id="guitarraNotasAcorde"></div>
                 <div id="guitarra"></div>
             </div>
+            <div id="subtitulos">
+                <p></p>
+                <p></p>
+                <div id="botoneraSeleccionarAcordes">
+                    <button onclick="anteriorAcorde()" id="izquierda" class="waves-effect waves-light btn">Anterior</button>
+                    <button onclick="siguienteAcorde()" id="derecha" class="waves-effect waves-light btn">Siguiente</button>
+                </div>
+            </div>
         </div>
     </main>
     <div id="botonesConfig">
-        <button onclick="volverIndex()">Volver a la configuración</button>
-        <button onclick="generarSonido()">Sonido</button>
-        <button onclick="irAJuego()">Practica en el mástil</button>
+        <button class="waves-effect waves-light btn" onclick="volverIndex()">Volver a la configuración</button>
+        <button class="waves-effect waves-light btn" onclick="generarSonido()"><i class="material-icons left">cloud</i>Escuchar acorde</button>
+        <button class="waves-effect waves-light btn blue" onclick="irAJuego()">Practica en el mástil</button>
     </div>
     <script src="nota.js"></script>
     <script src="guitarra.js"></script>

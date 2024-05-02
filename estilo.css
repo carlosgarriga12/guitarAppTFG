@@ -61,20 +61,23 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 3em;
 }
 
+#subtitulos,
 #titulos {
     display: flex;
     width: 80vw;
     justify-content: flex-start;
 }
-
+#subtitulos p,
 #titulos p {
     width: 10%;
     text-align: center;
     font-size: 1.25em;
 }
 
+#subtitulos div,
 #titulos div {
     width: 80%;
     display: flex;
@@ -125,7 +128,11 @@ main {
 
 #botonesConfig {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+}
+
+#botonesConfig button {
+    flex-grow: 1;
 }
 
 #configuracionAcorde {
