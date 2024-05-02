@@ -49,10 +49,10 @@ class Juego {
         this.pintarAfinacionActual();
         $("#containerJuego").append($("<div>").attr("id", "guitarraJuego"))
         this.pintarMastilJuego();
-        $("#juegoContainer").append($("<button>").on("click", () => {
+        $("#juegoContainer").append($("<button>").addClass("waves-effect waves-light btn").on("click", () => {
             window.location.href = "index.html";
         }).html("Cambiar la configuración"))
-        $("#juegoContainer").append($("<button>").on("click", () => {
+        $("#juegoContainer").append($("<button>").addClass("waves-effect waves-light btn").on("click", () => {
             window.location.href = "config.html";
         }).html("Volver a la generación de acordes"))
 

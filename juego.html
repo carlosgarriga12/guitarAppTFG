@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración de acorde</title>
+    <title>Juega en el mástil</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="lib/materialize/materialize.min.css">
     <link rel="stylesheet" href="estilo.css">
     <script src="nota.js"></script>
     <script src="guitarra.js"></script>
@@ -16,6 +18,7 @@
     <script src="aleatorio.js"></script>
     <script src="juego.js"></script>
     <script src="sistema.js"></script>
+    <script src="lib/materialize/materialize.min.js"></script>
 </head>
 
 <body>
@@ -27,7 +30,7 @@
     </header>
     <main>
         <div id="juegoContainer">
-            <button onclick="juego.comenzar()">Empezar a jugar</button>
+            <button class="waves-effect waves-light btn-large pulse shadow-effect" onclick="juego.comenzar()">Empezar a jugar</button>
         </div>
     </main>
 </body>
