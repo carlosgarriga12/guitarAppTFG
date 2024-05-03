@@ -61,7 +61,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 3em;
+    margin-bottom: 2vh;
 }
 
 #subtitulos,
@@ -111,12 +111,12 @@ main {
 #guitarraNotasAfinacion div,
 #guitarraNotasJuego div {
     text-align: center;
-    font-size: 2em;
+    font-size: 4vh;
 }
 
 #guitarraNotasAcorde div {
     text-align: center;
-    font-size: 2em;
+    font-size: 4vh;
     color: #004599;
 }
 

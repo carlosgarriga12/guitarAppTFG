@@ -42,6 +42,9 @@ function irAJuego() {
 function siguienteAcorde() {
     let notasAcorde = acordeActual.getNotas();
     acordeNum++;
+    if(guitarra.buscarAcorde(notasAcorde).length === 0) {
+        return;
+    }
     if (acordeNum === guitarra.buscarAcorde(notasAcorde).length) {
         acordeNum = 0; 
     }
@@ -49,11 +52,15 @@ function siguienteAcorde() {
     $(".notaAcorde").remove();
 
     guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
+    
 }
 
 function anteriorAcorde() {
     let notasAcorde = acordeActual.getNotas();
     acordeNum--;
+    if(guitarra.buscarAcorde(notasAcorde).length === 0) {
+        return;
+    }
     if (acordeNum === -1) {
         acordeNum = guitarra.buscarAcorde(notasAcorde).length - 1; 
     }
