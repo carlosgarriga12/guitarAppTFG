@@ -60,6 +60,7 @@ class Juego {
         let acordeAleatorio = Aleatorio.getAcorde(Aleatorio.getNota());
         this.pintarNuevoAcorde(acordeAleatorio);
         this.pintarOpciones(acordeAleatorio);
+        //Revisar para que haya al menos una posicion del acorde seleccionado
     }
 
     pintarNuevoAcorde(acorde) {
