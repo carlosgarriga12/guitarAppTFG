@@ -1,7 +1,6 @@
 class Juego {
     constructor(guitarra) {
         this.puntuacion = 0;
-        this.afinacion = afinacion.obtenerAfinacionGuardada();
         this.guitarra = guitarra;
     }
 
@@ -138,6 +137,11 @@ class Juego {
             if (tiempoInicial <= 0) {
                 clearInterval(temporizadorInterval); 
                 temporizadorDiv.html("¡Tiempo agotado!");
+                if (confirm("¡Tiempo agotado! Has obtenido " + this.puntuacion + " puntos. ¿Desea volver a jugar?")) {
+                    window.location.href = "juego.html";
+                } else {
+                    window.location.href = "config.html";
+                }
                 return;
             }
     
