@@ -103,7 +103,6 @@ class Guitarra {
                 posicionesDedos.push(traste);
             }
 
-            //combinaciones.push(posicionesDedos);
             // Verificar si todas las notas del acorde están presentes en la combinación
             let todasLasNotasPresentes = notasAcorde.every(nota => {
                 return posicionesDedos.some((traste, cuerda) => {
