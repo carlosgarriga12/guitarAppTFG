@@ -13,14 +13,14 @@ class ServicioAfinacion {
                     new Nota("B", "", 3),
                     new Nota("E", "", 4)
                 ];
-            } else if (formData.afinacionNombre === "dropD") {
+            } else if (formData.afinacionNombre === "openC") {
                 return [
-                    new Nota("D", "", 2),
-                    new Nota("A", "", 2),
-                    new Nota("D", "", 3),
+                    new Nota("C", "", 2),
+                    new Nota("G", "", 2),
+                    new Nota("C", "", 3),
+                    new Nota("E", "", 3),
                     new Nota("G", "", 3),
-                    new Nota("B", "", 3),
-                    new Nota("E", "", 4)
+                    new Nota("C", "", 4)
                 ];
             } else if (formData.afinacionNombre === "openD") {
                 return [
@@ -30,6 +30,42 @@ class ServicioAfinacion {
                     new Nota("F", "#", 3),
                     new Nota("A", "", 3),
                     new Nota("D", "", 4)
+                ];
+            } else if (formData.afinacionNombre === "openE") {
+                return [
+                    new Nota("E", "", 2),
+                    new Nota("B", "", 2),
+                    new Nota("E", "", 3),
+                    new Nota("G#", "", 3),
+                    new Nota("B", "", 3),
+                    new Nota("E", "", 4)
+                ];
+            } else if (formData.afinacionNombre === "openG") {
+                return [
+                    new Nota("D", "", 2),
+                    new Nota("G", "", 2),
+                    new Nota("D", "", 3),
+                    new Nota("G", "", 3),
+                    new Nota("B", "", 3),
+                    new Nota("D", "", 4)
+                ];
+            } else if (formData.afinacionNombre === "openA") {
+                return [
+                    new Nota("E", "", 2),
+                    new Nota("A", "", 2),
+                    new Nota("E", "", 3),
+                    new Nota("A", "", 3),
+                    new Nota("C#", "", 3),
+                    new Nota("E", "", 4)
+                ];
+            } else if (formData.afinacionNombre === "dropD") {
+                return [
+                    new Nota("D", "", 2),
+                    new Nota("A", "", 2),
+                    new Nota("D", "", 3),
+                    new Nota("G", "", 3),
+                    new Nota("B", "", 3),
+                    new Nota("E", "", 4)
                 ];
             } else {
                 if (formData.afinacionNombre === "personalizada") {

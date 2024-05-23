@@ -68,6 +68,7 @@ class GuitarApp {
     }
 
     togglePersonalizadaContainer() {
+        let afinacionesPredef = ["estandar", "openC", "openD", "openE", "openG", "openA", "dropD"]
         if ($("#afinacionPredefinida").val() === "personalizada") {
             this.limpiarCamposPersonalizada();
             $("#nombreAfinacion").next().addClass("active");                
@@ -79,9 +80,7 @@ class GuitarApp {
             $("#eliminarUltimaCuerda").hide();
         } else {
             if (
-                ($("#afinacionPredefinida").val() === "estandar") ||
-                ($("#afinacionPredefinida").val() === "dropD") ||
-                ($("#afinacionPredefinida").val() === "openD")
+                afinacionesPredef.includes($("#afinacionPredefinida").val())
             ) {
                 $("#personalizadaContainer").hide();
                 $("#nombreAfinacionContainer").hide();
