@@ -5,7 +5,7 @@ guitarra.rellenarMastil();
 
 let acordeActual = new Acorde(new Nota("C", "", 3), Acordes.Mayor);
 let acordeNum = 0;
-guitarra.pintarAcorde(guitarra.buscarAcorde(acordeActual.getNotas()), acordeNum)
+let notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(acordeActual.getNotas()), acordeNum, acordeActual)
 
 const synth = new Tone.PolySynth(Tone.Synth, {
     volume: -5,
@@ -22,9 +22,8 @@ const synth = new Tone.PolySynth(Tone.Synth, {
 }).toDestination();
 
 function generarSonido() {
-    let tiempoEspera = acordeActual.getNotasObjeto().length === 3 ? 75 : 100;
-    let acordeAux = new Acorde(acordeActual.getNotaBase().setOctava(4), acordeActual.getTipo())
-    acordeAux.getNotasObjeto().forEach((nota, index) => {
+    let tiempoEspera = 150;
+    notasGuitarra.forEach((nota, index) => {
         setTimeout(() => {
             synth.triggerAttackRelease(nota.getName() + nota.getOctava(), "8n", Tone.now())
         }, index * tiempoEspera);
@@ -51,7 +50,7 @@ function siguienteAcorde() {
     $(".dedo").remove();
     $(".notaAcorde").remove();
 
-    guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
+    notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum, acordeActual);
     
 }
 
@@ -68,7 +67,7 @@ function anteriorAcorde() {
     $(".dedo").remove();
     $(".notaAcorde").remove();
 
-    guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
+    notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum, acordeActual);
 }
 
 $(function() {
@@ -89,7 +88,7 @@ $(function() {
         $(".dedo").remove();
         $(".notaAcorde").remove();
         acordeNum = 0;
-        guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum);
+        notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum, acordeActual);
     });
     $('select').formSelect();
 });

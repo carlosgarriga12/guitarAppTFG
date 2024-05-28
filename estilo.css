@@ -77,6 +77,10 @@ main {
     font-size: 1.25em;
 }
 
+#titulos p:nth-child(3) {
+    width: 80%;
+}
+
 #subtitulos div,
 #titulos div {
     width: 80%;
@@ -214,6 +218,16 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2vw;
+    font-family: 'Arial', sans-serif;
+}
+
+.tonica {
+    color: #ff0000;
 }
 
 .punto {

@@ -79,8 +79,8 @@ class ServicioAfinacion {
                         }
                         notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
                     })
-
-                    return notas;
+                    
+                    return notas.reverse();
                 } else {
                     console.log("Afinación personalizada guardada")
                     let notas = [];
@@ -98,8 +98,7 @@ class ServicioAfinacion {
                         notas.push(new Nota(nota.nombre[0], alteracion, Number(nota.octava)))
                     })
 
-                    return notas;
-
+                    return notas.reverse();
                 }
             }
         }

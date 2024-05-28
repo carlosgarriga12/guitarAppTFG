@@ -75,6 +75,21 @@ class Acorde {
         return this.notas;
     }
 
+    calcularGrado(nota) {
+        const grados = {
+            'C': 1, 'D': 2, 'E': 3, 'F': 4, 'G': 5, 'A': 6, 'B': 7
+        };
+        const baseNombre = this.notaBase.nombre;
+        const baseGrado = grados[baseNombre];
+        const notaNombre = nota.nombre;
+        const notaGrado = grados[notaNombre];
+
+        let diferencia = (notaGrado - baseGrado + 7) % 7;
+        const nombresGrados = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+
+        return nombresGrados[diferencia];
+    }
+
     toString() {
         let aux = "";
         aux += this.notaBase.getName()

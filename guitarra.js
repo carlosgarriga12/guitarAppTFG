@@ -3,8 +3,8 @@ class Guitarra {
         if (afinacion.length > 12) {
             throw new Error('La afinación no puede tener más de 12 notas');
         }
-        if (afinacion.length < 4) {
-            throw new Error('La afinación no puede tener menos de 4 notas');
+        if (afinacion.length < 6) {
+            throw new Error('La afinación no puede tener menos de 6 notas');
         }
         this.afinacion = afinacion;
         this.mastil = [];
@@ -20,7 +20,8 @@ class Guitarra {
         return this.afinacion;
     }
 
-    pintarAcorde(combinaciones, nCombinacion) {
+    pintarAcorde(combinaciones, nCombinacion, acorde) {
+        let notasGuitarra = []
         if(combinaciones.length === 0) {
             alert("No se han encontrado combinaciones posibles en la afinación actual");
             return 0;
@@ -33,16 +34,27 @@ class Guitarra {
             for (let j = 0; j < posicionDedos[i]; j++) {
                 notaInicial = notaInicial.siguiente();
             }
+            notasGuitarra.push(notaInicial);
 
-            $("#guitarraNotasAcorde").append($("<div>")
-                .addClass("notaAcorde")
-                .html(notaInicial.getName() + notaInicial.getOctava()))
+            let grado = acorde.calcularGrado(notaInicial);
+            let notaAcorde = $("<div>")
+                                .addClass("notaAcorde")
+                                .html(notaInicial.getName() + notaInicial.getOctava());
+
+            if (grado === "I") {
+                notaAcorde.css('color', 'red');
+            }
+            $("#guitarraNotasAcorde").append(notaAcorde)
             if (posicionDedos[i] !== 0) {
-                let posicion = $("<div>").addClass("dedo");
+                
+                let posicion = $("<div>").addClass("dedo").text(grado);
                 let id = "#cuerda" + i + "Traste" + (posicionDedos[i] - 1);
                 $(id).append(posicion)
             }
         }
+        $("#titulos p:nth-child(3)").html("Acorde " + (nCombinacion + 1) + "/" + combinaciones.length)
+
+        return notasGuitarra;
     }
 
     pintar() {

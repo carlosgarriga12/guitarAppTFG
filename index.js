@@ -62,7 +62,7 @@ class GuitarApp {
         //$("nombreAfinacion").next().removeClass("active");
         M.updateTextFields();
         $("#cuerdasContainer").empty();
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
             this.agregarCuerda();
         }
     }
@@ -108,8 +108,8 @@ class GuitarApp {
         afinacionObjeto = JSON.parse(afinacionObjeto)
         let numNotas = afinacionObjeto["notasPersonalizadas"].length;
 
-        if (numNotas > 4) {
-            let notasParaCompletar = numNotas - 4;
+        if (numNotas > 6) {
+            let notasParaCompletar = numNotas - 6;
             for (let i = 0; i < notasParaCompletar; i++) {
                 this.agregarCuerda();
             }
@@ -169,7 +169,7 @@ class GuitarApp {
             </div>`;
 
         $("#cuerdasContainer").append(nuevoCampo);
-        if (numCuerdas > 4) {
+        if (numCuerdas > 6) {
             $("#eliminarUltimaCuerda").show();
         }
         M.updateTextFields();
@@ -178,7 +178,7 @@ class GuitarApp {
 
     eliminarUltimaCuerda() {
         $("#cuerdasContainer").children("div").last().remove();
-        if ($("#cuerdasContainer select").length <= 8) {
+        if ($("#cuerdasContainer select").length <= 12) {
             $("#eliminarUltimaCuerda").hide();
         }
         M.updateTextFields();
