@@ -1,6 +1,7 @@
 class Juego {
     constructor(guitarra) {
-        this.puntuacion = 0;
+        this.aciertos = 0;
+        this.fallos = 0;
         this.guitarra = guitarra;
     }
 
@@ -89,8 +90,8 @@ class Juego {
             if (i === numeroAleatorio) {
                 $("#opcionesContainer").append(
                     $("<button>").on("click", () => {
-                        this.puntuacion += 100; 
-                        $("#puntuacion").html("Puntuación: " + this.puntuacion)
+                        this.aciertos += 1; 
+                        $("#puntuacion").html("Aciertos: " + this.aciertos + "\tFallos: " + this.fallos)
                         this.siguiente()
                     })
                         .html(acorde.toString())
@@ -98,8 +99,8 @@ class Juego {
             } else {
                 $("#opcionesContainer").append(
                     $("<button>").on("click", () => {
-                        this.puntuacion -= 100; 
-                        $("#puntuacion").html("Puntuación: " + this.puntuacion)
+                        this.fallos += 1; 
+                        $("#puntuacion").html("Aciertos: " + this.aciertos + "\tFallos: " + this.fallos)
                         this.siguiente()
                     })
                         .html(Aleatorio.getAcorde(Aleatorio.getNota()).toString())
@@ -119,7 +120,7 @@ class Juego {
     inicializarPuntuacion() {
         let puntuacionDiv = $("#puntuacion");
 
-        puntuacionDiv.html("Puntuación: " + this.puntuacion);
+        puntuacionDiv.html("Aciertos: " + this.aciertos + "\tFallos: " + this.fallos);
     }
 
     inicializarTemporizador() {
@@ -138,7 +139,7 @@ class Juego {
             if (tiempoInicial <= 0) {
                 clearInterval(temporizadorInterval); 
                 temporizadorDiv.html("¡Tiempo agotado!");
-                if (confirm("¡Tiempo agotado! Has obtenido " + this.puntuacion + " puntos. ¿Desea volver a jugar?")) {
+                if (confirm("¡Tiempo agotado! Aciertos: " + this.aciertos + "\tFallos: " + this.fallos + ". ¿Desea volver a jugar?")) {
                     window.location.href = "juego.html";
                 } else {
                     window.location.href = "config.html";

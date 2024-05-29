@@ -2,7 +2,7 @@
   "name": "guitar-app",
   "version": "1.0.0",
   "description": "Prueba de proyecto con electronJS",
-  "main": "main.js",
+  "main": "js/main.js",
   "scripts": {
     "start": "electron .",
     "test": "jest"
