@@ -113,69 +113,6 @@ class Guitarra {
         }
     }
 
-    /*buscarAcorde(notasAcorde) {
-        const cantidadCuerdas = this.afinacion.length;
-
-        let trastesPorCuerda = [];
-        for (let i = 0; i < cantidadCuerdas; i++) {
-            let trastesEnCuerda = [];
-            for (let j = 0; j < this.mastil[i].length; j++) {
-                let notaEnTraste = this.mastil[i][j].getName();
-                if (notasAcorde.includes(notaEnTraste)) {
-                    trastesEnCuerda.push(j);
-                }
-            }
-            trastesPorCuerda.push(trastesEnCuerda);
-        }
-
-        console.log("Trastes por cuerda")
-        console.log(trastesPorCuerda);
-
-        let combinaciones = [];
-        let indices = new Array(cantidadCuerdas).fill(0);
-        while (indices[cantidadCuerdas - 1] < trastesPorCuerda[cantidadCuerdas - 1].length) {
-            let posicionesDedos = [];
-            for (let i = 0; i < cantidadCuerdas; i++) {
-                let traste = trastesPorCuerda[i][indices[i]];
-                posicionesDedos.push(traste);
-            }
-
-            // Verificar si todas las notas del acorde están presentes en la combinación
-            let todasLasNotasPresentes = notasAcorde.every(nota => {
-                return posicionesDedos.some((traste, cuerda) => {
-                    return this.obtenerTrastePorNota(nota, cuerda) === traste;
-                });
-            });
-
-            if (todasLasNotasPresentes) {
-                combinaciones.push(posicionesDedos);
-            }
-
-            indices[0]++;
-            for (let i = 0; i < cantidadCuerdas - 1; i++) {
-                if (indices[i] === trastesPorCuerda[i].length) {
-                    indices[i] = 0;
-                    indices[i + 1]++;
-                }
-            }
-            if (indices[cantidadCuerdas - 1] >= trastesPorCuerda[cantidadCuerdas - 1].length) {
-                break;
-            }
-        }
-
-        const limiteDistanciaMaxima = 3;
-
-        let combinacionesFiltradas = combinaciones.filter(combinacion => {
-            return this.calcularDistanciaMaxima(combinacion) <= limiteDistanciaMaxima;
-        });
-
-        console.log("Combinaciones filtradas:");
-        console.log(combinacionesFiltradas);
-        return combinacionesFiltradas;
-        
-
-
-    }*/
     esCejilla(posicionDedos) {
         let trastes = posicionDedos.filter(traste => traste !== -1 && traste !== 0);
         let trasteMinimo = Math.min(...trastes);
