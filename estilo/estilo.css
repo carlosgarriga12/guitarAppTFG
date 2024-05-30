@@ -228,7 +228,7 @@ main {
 
 .cejilla {
     margin: 0 auto;
-    width: 15px; /* Ancho del rectángulo */
+    width: 1.5vw;
     height: 7vh;
     background-color: #004599;
     position: absolute;
