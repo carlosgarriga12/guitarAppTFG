@@ -9,9 +9,14 @@ class GuitarApp {
         $("#afinacionPredefinida").on("change", this.togglePersonalizadaContainer.bind(this));
         $("#agregarCuerda").on("click", this.agregarCuerda.bind(this));
         $("#eliminarUltimaCuerda").on("click", this.eliminarUltimaCuerda.bind(this));
-        $("#afinacionForm").on("submit", (event) => {
+        $("#afinacionForm").on("change", (event) => {
             this.establecerAfinacion(event);
+        })
+        $("#afinacionForm").on("submit", (event) => {
+            event.preventDefault();
+            window.location.href = "config.html";
         });
+        
         $("#addAfinacionPersonalizada").on("click", () => {
             this.addAfinacionPersonalizada();
         });
@@ -210,8 +215,6 @@ class GuitarApp {
         }
 
         localStorage.setItem("afinacionData", JSON.stringify(afinacionData));
-
-        window.location.href = "config.html";
         
     }
 

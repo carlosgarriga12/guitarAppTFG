@@ -36,7 +36,7 @@ class ServicioAfinacion {
                     new Nota("E", "", 2),
                     new Nota("B", "", 2),
                     new Nota("E", "", 3),
-                    new Nota("G#", "", 3),
+                    new Nota("G", "#", 3),
                     new Nota("B", "", 3),
                     new Nota("E", "", 4)
                 ];
@@ -55,7 +55,7 @@ class ServicioAfinacion {
                     new Nota("A", "", 2),
                     new Nota("E", "", 3),
                     new Nota("A", "", 3),
-                    new Nota("C#", "", 3),
+                    new Nota("C", "#", 3),
                     new Nota("E", "", 4)
                 ];
             } else if (formData.afinacionNombre === "dropD") {

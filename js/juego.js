@@ -38,7 +38,6 @@ class Juego {
     }
 
     comenzar() {
-        $("#juegoContainer button").remove();
         $("#juegoContainer").append($("<div>").attr("id", "estadoJuego"))
         $("#estadoJuego").append($("<div>").attr("id", "puntuacion"))
         this.inicializarPuntuacion();

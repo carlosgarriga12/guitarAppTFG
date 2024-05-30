@@ -22,16 +22,20 @@
 </head>
 
 <body>
-    <script>
-        let juego = new Juego(guitarra);
-    </script>
     <header>
-        <h1>Juego para practicar acordes</h1>
+        <h1>GuitarApp</h1>
+        <nav>
+            <a href="index.html">Afinación</a>
+            <a href="config.html">Acordes</a>
+            <a href="juego.html">Juego</a>
+        </nav>
     </header>
     <main>
-        <div id="juegoContainer">
-            <button class="waves-effect waves-light btn-large pulse shadow-effect" onclick="juego.comenzar()">Empezar a jugar</button>
-        </div>
+        <div id="juegoContainer"></div>
     </main>
+    <script>
+        let juego = new Juego(guitarra);
+        juego.comenzar()
+    </script>
 </body>
 </html>
