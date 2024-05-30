@@ -49,6 +49,7 @@ function siguienteAcorde() {
     }
     $(".dedo").remove();
     $(".notaAcorde").remove();
+    $(".cejilla").remove();
 
     notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum, acordeActual);
     
@@ -66,6 +67,8 @@ function anteriorAcorde() {
 
     $(".dedo").remove();
     $(".notaAcorde").remove();
+    $(".cejilla").remove();
+
 
     notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum, acordeActual);
 }
@@ -87,6 +90,8 @@ $(function() {
 
         $(".dedo").remove();
         $(".notaAcorde").remove();
+        $(".cejilla").remove();
+
         acordeNum = 0;
         notasGuitarra = guitarra.pintarAcorde(guitarra.buscarAcorde(notasAcorde), acordeNum, acordeActual);
     });

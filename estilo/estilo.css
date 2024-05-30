@@ -226,6 +226,17 @@ main {
     font-family: 'Arial', sans-serif;
 }
 
+.cejilla {
+    margin: 0 auto;
+    width: 15px; /* Ancho del rectángulo */
+    height: 7vh;
+    background-color: #004599;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .tonica {
     color: #ff0000;
 }

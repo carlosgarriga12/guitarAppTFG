@@ -21,14 +21,24 @@ class Guitarra {
     }
 
     pintarAcorde(combinaciones, nCombinacion, acorde) {
+        let esCejilla = false;
         let notasGuitarra = []
         if (combinaciones.length === 0) {
             alert("No se han encontrado combinaciones posibles en la afinación actual");
             return 0;
         }
         let posicionDedos = combinaciones[nCombinacion];
+        let trastes = posicionDedos.filter(traste => traste !== -1 && traste !== 0);
+        let trasteMinimo = Math.min(...trastes);
+
+        if (this.esCejilla(posicionDedos)) esCejilla = true;
 
         for (let i = 0; i < posicionDedos.length; i++) {
+            if (esCejilla) {
+                let posicion = $("<div>").addClass("cejilla");
+                let id = "#cuerda" + i + "Traste" + (trasteMinimo - 1);
+                $(id).append(posicion)
+            }
             let notaAcorde;
             if (posicionDedos[i] !== - 1) {
                 let notaInicial = this.afinacion[i];
