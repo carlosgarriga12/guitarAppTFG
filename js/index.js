@@ -58,7 +58,7 @@ class GuitarApp {
 
             console.log(afinacionObjeto);
             alert("Afinación " + nombre + " guardada correctamente");
-            this.establecerAfinacion(null);
+            window.location.href = "config.html";
         }
     }
 

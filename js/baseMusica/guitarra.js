@@ -32,7 +32,7 @@ class Guitarra {
         let esCejilla = false;
         let notasGuitarra = []
         if (combinaciones.length === 0) {
-            alert("No se han encontrado combinaciones posibles en la afinación actual");
+            $("#titulos p:nth-child(3)").html("No se han encontrado acordes")
             return 0;
         }
         let posicionDedos = combinaciones[nCombinacion];
