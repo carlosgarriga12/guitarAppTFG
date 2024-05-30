@@ -13,7 +13,7 @@ class GuitarApp {
             this.establecerAfinacion(event);
         })
         $("#afinacionForm").on("submit", (event) => {
-            event.preventDefault();
+            this.establecerAfinacion(event);
             window.location.href = "config.html";
         });
         
