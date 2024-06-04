@@ -72,10 +72,27 @@ class GuitarApp {
         }
     }
 
+
+    setAfinacionEstandar() {
+        let afinacionEstandar = [
+            new Nota("E", "", 2),
+            new Nota("A", "", 2),
+            new Nota("D", "", 3),
+            new Nota("G", "", 3),
+            new Nota("B", "", 3),
+            new Nota("E", "", 4)
+        ].reverse();
+        $("#cuerdasContainer").children("div").each(function (index) {
+            $(this).find("#personalizadaCuerda" + (index + 1) + "Nota").val(afinacionEstandar[index].nombre).formSelect();
+            $(this).find("#personalizadaCuerda" + (index + 1) + "Octava").val(afinacionEstandar[index].octava).formSelect();
+        });
+    }
+
     togglePersonalizadaContainer() {
         let afinacionesPredef = ["estandar", "openC", "openD", "openE", "openG", "openA", "dropD"]
         if ($("#afinacionPredefinida").val() === "personalizada") {
             this.limpiarCamposPersonalizada();
+            this.setAfinacionEstandar();
             $("#nombreAfinacion").next().addClass("active");                
             $("#nombreAfinacionContainer").show();
             $("#personalizadaContainer").show();
