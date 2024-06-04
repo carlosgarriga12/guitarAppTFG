@@ -216,11 +216,13 @@ class GuitarApp {
 
         if ($("#afinacionPredefinida").val() === "personalizada") {
             let notas = [];
-            $("#cuerdasContainer").children("div").each(function () {
-                let notaCompleta = $(this).find("select[name^='personalizadaCuerda'] option:selected").text();
+            
+            $("#cuerdasContainer").children("div").each(function (index) {
+                let notaNombre = $(this).find("#personalizadaCuerda" + (index + 1) + "Nota").val();
+                let octavaNombre = $(this).find("#personalizadaCuerda" + (index + 1) + "Octava").val();
                 let nota = {
-                    nombre: notaCompleta[0],
-                    octava: notaCompleta[1]
+                    nombre: notaNombre,
+                    octava: octavaNombre
                 };
                 notas.push(nota);
             });
