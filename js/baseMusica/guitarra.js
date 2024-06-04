@@ -15,7 +15,7 @@ class Guitarra {
             this.mastil.push(fila);
         }
 
-        document.addEventListener('keydown', function(event) {
+        document.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowLeft') {
                 anteriorAcorde();
             } else if (event.key === 'ArrowRight') {
@@ -132,7 +132,7 @@ class Guitarra {
         }
         return false;
     }
-
+    /*
     buscarAcorde(notasAcorde) {
         const cantidadCuerdas = this.afinacion.length;
 
@@ -183,6 +183,8 @@ class Guitarra {
             }
         }
 
+
+
         const limiteDistanciaMaxima = 3;
 
         let combinacionesFiltradas = combinaciones.filter(combinacion => {
@@ -194,6 +196,92 @@ class Guitarra {
 
         console.log("Combinaciones filtradas:");
         console.log(combinacionesFiltradas);
+        return combinacionesFiltradas;
+    }
+    */
+
+    buscarAcorde(notasAcorde, afinacionSubset = this.afinacion, mastilSubset = this.mastil) {
+        const cantidadCuerdas = afinacionSubset.length;
+        let trastesPorCuerda = [];
+    
+        for (let i = 0; i < cantidadCuerdas; i++) {
+            let trastesEnCuerda = [];
+            for (let j = 0; j < mastilSubset[i].length; j++) {
+                let notaEnTraste = mastilSubset[i][j].getName();
+                if (notasAcorde.includes(notaEnTraste)) {
+                    trastesEnCuerda.push(j);
+                }
+            }
+            trastesPorCuerda.push(trastesEnCuerda);
+        }
+    
+        console.log("Trastes por cuerda");
+        console.log(trastesPorCuerda);
+    
+        let combinaciones = [];
+        let indices = new Array(cantidadCuerdas).fill(0);
+        while (indices[cantidadCuerdas - 1] < trastesPorCuerda[cantidadCuerdas - 1].length) {
+            let posicionesDedos = [];
+            for (let i = 0; i < cantidadCuerdas; i++) {
+                let traste = trastesPorCuerda[i][indices[i]];
+                posicionesDedos.push(traste);
+            }
+    
+            // Verificar si todas las notas del acorde están presentes en la combinación
+            let todasLasNotasPresentes = notasAcorde.every(nota => {
+                return posicionesDedos.some((traste, cuerda) => {
+                    return this.obtenerTrastePorNota(nota, cuerda) === traste;
+                });
+            });
+    
+            if (todasLasNotasPresentes) {
+                combinaciones.push(posicionesDedos);
+            }
+    
+            indices[0]++;
+            for (let i = 0; i < cantidadCuerdas - 1; i++) {
+                if (indices[i] === trastesPorCuerda[i].length) {
+                    indices[i] = 0;
+                    indices[i + 1]++;
+                }
+            }
+            if (indices[cantidadCuerdas - 1] >= trastesPorCuerda[cantidadCuerdas - 1].length) {
+                break;
+            }
+        }
+    
+        const limiteDistanciaMaxima = 3;
+    
+        let combinacionesFiltradas = combinaciones.filter(combinacion => {
+            let cantidadDedos = combinacion.filter(traste => traste > 0).length;
+            return cantidadDedos <= 4 || this.esCejilla(combinacion);
+        }).filter(combinacion => {
+            return this.calcularDistanciaMaxima(combinacion) <= limiteDistanciaMaxima;
+        });
+    
+        console.log("Combinaciones filtradas:");
+        console.log(combinacionesFiltradas);
+    
+        // Buscar en subconjuntos de 4 cuerdas consecutivas
+        if (cantidadCuerdas > 4) {
+            for (let i = 0; i <= cantidadCuerdas - 4; i++) {
+                const afinacionSubset = this.afinacion.slice(i, i + 4);
+                const mastilSubset = this.mastil.slice(i, i + 4);
+                let subCombinaciones = this.buscarAcorde(notasAcorde, afinacionSubset, mastilSubset);
+    
+                // Añadir cuerdas muteadas al inicio y al final del subset
+                subCombinaciones = subCombinaciones.map(combinacion => {
+                    let nuevaCombinacion = new Array(cantidadCuerdas).fill(-1);
+                    for (let j = i; j < 4; j++) {
+                        nuevaCombinacion[i + j] = combinacion[j];
+                    }
+                    return nuevaCombinacion;
+                });
+    
+                combinacionesFiltradas = combinacionesFiltradas.concat(subCombinaciones);
+            }
+        }
+    
         return combinacionesFiltradas;
     }
 
