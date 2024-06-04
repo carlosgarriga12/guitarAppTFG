@@ -22,7 +22,7 @@ class Juego {
                 let cuerda = $('<div>')
                     .addClass("cuerda")
                     .addClass("cuerdaJuego")
-                    .attr("id", "JuegoCuerda" + j + "Traste" + i);
+                    .attr("id", "juegoCuerda" + j + "Traste" + i);
                 traste.append(cuerda);
             }
         }
@@ -64,19 +64,31 @@ class Juego {
     }
 
     pintarNuevoAcorde(acorde) {
+        let esCejilla = false;
         let combinacionesAcordes = this.guitarra.buscarAcorde(acorde.getNotas())
         let posicionDedos = combinacionesAcordes[Math.floor(Math.random() * combinacionesAcordes.length)];
+        let trastes = posicionDedos.filter(traste => traste !== -1 && traste !== 0);
+        let trasteMinimo = Math.min(...trastes);
+
+        if (this.guitarra.esCejilla(posicionDedos)) esCejilla = true;
 
         for (let i = 0; i < posicionDedos.length; i++) {
-            let notaInicial = this.guitarra.afinacion[i];
-
-            for (let j = 0; j < posicionDedos[i]; j++) {
-                notaInicial = notaInicial.siguiente();
-            }
-            if (posicionDedos[i] !== 0) {
-                let posicion = $("<div>").addClass("dedo");
-                let id = "#JuegoCuerda" + i + "Traste" + (posicionDedos[i] - 1);
+            if (esCejilla && posicionDedos[i] != 0) {
+                let posicion = $("<div>").addClass("cejilla");
+                let id = "#juegoCuerda" + i + "Traste" + (trasteMinimo - 1);
                 $(id).append(posicion)
+            }
+            if (posicionDedos[i] !== -1) {
+                let notaInicial = this.guitarra.afinacion[i];
+
+                for (let j = 0; j < posicionDedos[i]; j++) {
+                    notaInicial = notaInicial.siguiente();
+                }
+                if (posicionDedos[i] !== 0) {
+                    let posicion = $("<div>").addClass("dedo");
+                    let id = "#juegoCuerda" + i + "Traste" + (posicionDedos[i] - 1);
+                    $(id).append(posicion)
+                }
             }
         }
 
@@ -110,6 +122,7 @@ class Juego {
 
     siguiente() {
         $(".dedo").remove();
+        $(".cejilla").remove();
         $("#opcionesContainer").empty();
         let acordeAleatorio = Aleatorio.getAcorde(Aleatorio.getNota());
         this.pintarNuevoAcorde(acordeAleatorio);

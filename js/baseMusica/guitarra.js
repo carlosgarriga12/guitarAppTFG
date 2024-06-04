@@ -42,7 +42,7 @@ class Guitarra {
         if (this.esCejilla(posicionDedos)) esCejilla = true;
 
         for (let i = 0; i < posicionDedos.length; i++) {
-            if (esCejilla && posicionDedos[i] != 0) {
+            if (esCejilla && posicionDedos[i] != 0 && posicionDedos[i] != -1) {
                 let posicion = $("<div>").addClass("cejilla");
                 let id = "#cuerda" + i + "Traste" + (trasteMinimo - 1);
                 $(id).append(posicion)
