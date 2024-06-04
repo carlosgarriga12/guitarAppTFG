@@ -230,7 +230,7 @@ class Guitarra {
             // Verificar si todas las notas del acorde están presentes en la combinación
             let todasLasNotasPresentes = notasAcorde.every(nota => {
                 return posicionesDedos.some((traste, cuerda) => {
-                    return this.obtenerTrastePorNota(nota, cuerda) === traste;
+                    return this.obtenerTrastePorNota(nota, cuerda, mastilSubset) === traste;
                 });
             });
     
@@ -272,7 +272,7 @@ class Guitarra {
                 // Añadir cuerdas muteadas al inicio y al final del subset
                 subCombinaciones = subCombinaciones.map(combinacion => {
                     let nuevaCombinacion = new Array(cantidadCuerdas).fill(-1);
-                    for (let j = i; j < 4; j++) {
+                    for (let j = 0; j < 4; j++) {
                         nuevaCombinacion[i + j] = combinacion[j];
                     }
                     return nuevaCombinacion;
@@ -282,14 +282,14 @@ class Guitarra {
             }
         }
     
-        return combinacionesFiltradas;
+        return [...new Set(combinacionesFiltradas)];
     }
 
-    obtenerTrastePorNota(nota, cuerda) {
-        const cantidadTrastes = this.mastil[cuerda].length;
+    obtenerTrastePorNota(nota, cuerda, mastil) {
+        const cantidadTrastes = mastil[cuerda].length;
 
         for (let traste = 0; traste < cantidadTrastes; traste++) {
-            if (this.mastil[cuerda][traste].getName() === nota) {
+            if (mastil[cuerda][traste].getName() === nota) {
                 return traste;
             }
         }
