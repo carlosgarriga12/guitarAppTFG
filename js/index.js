@@ -39,6 +39,9 @@ class GuitarApp {
                 .html("<span style='color: red;'>Debes de escribir un nombre para guardar tu afinación</span>")
                 .css("display", "block");
         } else {
+            let afinacionOriginal = $("#afinacionPredefinida").val();
+            let item = localStorage.getItem("afinacionPersonalizada_" + afinacionOriginal);
+            let afinacionNueva = $("#nombreAfinacion").val()
             let notas = [];
             $("#cuerdasContainer").children("div").each(function (index) {
 
@@ -49,16 +52,23 @@ class GuitarApp {
 
                 notas.push(nota);
             });
-            let nombre = $("#nombreAfinacion").val()
+            
             afinacionData.notasPersonalizadas = notas;
-            afinacionData.afinacionNombre = nombre;
-            localStorage.setItem("afinacionPersonalizada_" + nombre, JSON.stringify(afinacionData));
-
-            let afinacionObjeto = localStorage.getItem("afinacionPersonalizada_" + nombre);
-
+            if (item === null) {
+                afinacionData.afinacionNombre = afinacionNueva;
+                
+            } else {
+                localStorage.removeItem("afinacionPersonalizada_" + afinacionOriginal)
+                afinacionData.afinacionNombre = afinacionNueva
+                localStorage.setItem("afinacionData", JSON.stringify(afinacionData))
+            }
+            localStorage.setItem("afinacionPersonalizada_" + afinacionNueva, JSON.stringify(afinacionData));
+    
+            let afinacionObjeto = localStorage.getItem("afinacionPersonalizada_" + afinacionNueva);
             console.log(afinacionObjeto);
-            alert("Afinación " + nombre + " guardada correctamente");
+            alert("Afinación " + afinacionNueva + " guardada correctamente");
             window.location.href = "config.html";
+            
         }
     }
 
@@ -130,12 +140,10 @@ class GuitarApp {
         afinacionObjeto = JSON.parse(afinacionObjeto)
         let numNotas = afinacionObjeto["notasPersonalizadas"].length;
 
-        if (numNotas > 6) {
-            let notasParaCompletar = numNotas - 6;
-            for (let i = 0; i < notasParaCompletar; i++) {
-                this.agregarCuerda();
-            }
+        for (let i = 0; i < numNotas; i++) {
+            this.agregarCuerda();
         }
+
 
         $("#cuerdasContainer").children("div").each(function (index) {
             $(this).find("#personalizadaCuerda" + (index + 1) + "Nota").val(afinacionObjeto.notasPersonalizadas[index].nombre).formSelect();
@@ -196,6 +204,7 @@ class GuitarApp {
         }
         M.updateTextFields();
         $('select').formSelect();
+        this.establecerAfinacion(null);
     }
 
     eliminarUltimaCuerda() {
@@ -205,6 +214,7 @@ class GuitarApp {
         }
         M.updateTextFields();
         $('select').formSelect();
+        this.establecerAfinacion(null);
     }
 
     establecerAfinacion(event) {
