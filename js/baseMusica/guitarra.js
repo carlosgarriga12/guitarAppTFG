@@ -118,7 +118,7 @@ class Guitarra {
         let trasteMinimo = Math.min(...trastes);
         let countTrasteMinimo = trastes.filter(traste => traste === trasteMinimo).length;
 
-        if (countTrasteMinimo >= 3) {
+        if (countTrasteMinimo >= Math.floor(this.afinacion.length / 2)) {
             let notasSuperiores = trastes.filter(traste => traste > trasteMinimo);
             if (notasSuperiores.length + countTrasteMinimo === trastes.length) {
                 // Verificar que 0 o -1 están antes del resto de las notas
@@ -127,78 +127,22 @@ class Guitarra {
                         return false;
                     }
                 }
-                return true;
+                // Verificar que las cuerdas delante de la cejilla sean como mucho 3
+                let dedosDelante = 0;
+                for (let i = 0; i < posicionDedos.length; i++) {
+                    if (posicionDedos[i] > 0 && posicionDedos[i] > trasteMinimo) {
+                        dedosDelante++;
+                    }
+                }
+                if (dedosDelante <= 3) {
+                    return true;
+                }
+                
             }
+
         }
         return false;
     }
-    /*
-    buscarAcorde(notasAcorde) {
-        const cantidadCuerdas = this.afinacion.length;
-
-        let trastesPorCuerda = [];
-        for (let i = 0; i < cantidadCuerdas; i++) {
-            let trastesEnCuerda = [];
-            for (let j = 0; j < this.mastil[i].length; j++) {
-                let notaEnTraste = this.mastil[i][j].getName();
-                if (notasAcorde.includes(notaEnTraste)) {
-                    trastesEnCuerda.push(j);
-                }
-            }
-            trastesPorCuerda.push(trastesEnCuerda);
-        }
-
-        console.log("Trastes por cuerda");
-        console.log(trastesPorCuerda);
-
-        let combinaciones = [];
-        let indices = new Array(cantidadCuerdas).fill(0);
-        while (indices[cantidadCuerdas - 1] < trastesPorCuerda[cantidadCuerdas - 1].length) {
-            let posicionesDedos = [];
-            for (let i = 0; i < cantidadCuerdas; i++) {
-                let traste = trastesPorCuerda[i][indices[i]];
-                posicionesDedos.push(traste);
-            }
-
-            // Verificar si todas las notas del acorde están presentes en la combinación
-            let todasLasNotasPresentes = notasAcorde.every(nota => {
-                return posicionesDedos.some((traste, cuerda) => {
-                    return this.obtenerTrastePorNota(nota, cuerda) === traste;
-                });
-            });
-
-            if (todasLasNotasPresentes) {
-                combinaciones.push(posicionesDedos);
-            }
-
-            indices[0]++;
-            for (let i = 0; i < cantidadCuerdas - 1; i++) {
-                if (indices[i] === trastesPorCuerda[i].length) {
-                    indices[i] = 0;
-                    indices[i + 1]++;
-                }
-            }
-            if (indices[cantidadCuerdas - 1] >= trastesPorCuerda[cantidadCuerdas - 1].length) {
-                break;
-            }
-        }
-
-
-
-        const limiteDistanciaMaxima = 3;
-
-        let combinacionesFiltradas = combinaciones.filter(combinacion => {
-            let cantidadDedos = combinacion.filter(traste => traste > 0).length;
-            return cantidadDedos <= 4 || this.esCejilla(combinacion);
-        }).filter(combinacion => {
-            return this.calcularDistanciaMaxima(combinacion) <= limiteDistanciaMaxima;
-        });
-
-        console.log("Combinaciones filtradas:");
-        console.log(combinacionesFiltradas);
-        return combinacionesFiltradas;
-    }
-    */
 
     buscarAcorde(notasAcorde, afinacionSubset = this.afinacion, mastilSubset = this.mastil) {
         const cantidadCuerdas = afinacionSubset.length;
