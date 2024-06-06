@@ -1,5 +1,5 @@
-const { Nota } = require('../nota.js');
-const { Guitarra } = require('../guitarra.js');
+const { Nota } = require('../js/baseMusica/nota.js');
+const { Guitarra } = require('../js/baseMusica/guitarra.js');
 
 describe('Crear una guitarra', () => {
     describe('con el constructor', () => {
@@ -32,7 +32,7 @@ describe('Crear una guitarra', () => {
                 new Nota("E", "", 2),
                 new Nota("A", "", 2)
             ];
-            expect(() => new Guitarra(afinacion)).toThrow('La afinación no puede tener menos de 4 notas');
+            expect(() => new Guitarra(afinacion)).toThrow('La afinación no puede tener menos de 6 notas');
         });
         
         it('debería lanzar una excepción cuando trato de crear una guitarra con 13 cuerdas', () => {
@@ -54,26 +54,30 @@ describe('Crear una guitarra', () => {
             expect(() => new Guitarra(afinacion)).toThrow('La afinación no puede tener más de 12 notas');
         });
 
-        it('debería lanzar una excepción cuando trato de crear una guitarra con 3 cuerdas', () => {
+        it('debería lanzar una excepción cuando trato de crear una guitarra con 5 cuerdas', () => {
             let afinacion = [
                 new Nota("E", "", 2),
                 new Nota("A", "", 2),
-                new Nota("D", "", 3)
+                new Nota("D", "", 3),
+                new Nota("E", "", 2),
+                new Nota("A", "", 2)
             ];
-            expect(() => new Guitarra(afinacion)).toThrow('La afinación no puede tener menos de 4 notas');
+            expect(() => new Guitarra(afinacion)).toThrow('La afinación no puede tener menos de 6 notas');
         });
 
-        it('debería crear correctamente una guitarra con 4 cuerdas', () => {
+        it('debería crear correctamente una guitarra con 6 cuerdas', () => {
             let afinacion = [
                 new Nota("E", "", 2),
                 new Nota("A", "", 2),
+                new Nota("D", "", 3),
+                new Nota("G", "", 3),
                 new Nota("D", "", 3),
                 new Nota("G", "", 3)
             ];
             const guitarra = new Guitarra(afinacion);
             expect(guitarra).toBeInstanceOf(Guitarra);
-            expect(guitarra.afinacion.length).toBe(4);
-            expect(guitarra.mastil.length).toBe(4);
+            expect(guitarra.afinacion.length).toBe(6);
+            expect(guitarra.mastil.length).toBe(6);
             expect(guitarra.trastes).toBe(12);
         });
 

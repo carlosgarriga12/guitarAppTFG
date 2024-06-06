@@ -15,13 +15,13 @@ class Guitarra {
             this.mastil.push(fila);
         }
 
-        document.addEventListener('keydown', function (event) {
+        /*document.addEventListener('keydown', function (event) {
             if (event.key === 'ArrowLeft') {
                 anteriorAcorde();
             } else if (event.key === 'ArrowRight') {
                 siguienteAcorde();
             }
-        });
+        });*/
     }
 
     getAfinacion() {

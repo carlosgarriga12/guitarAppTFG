@@ -1,4 +1,4 @@
-const { Nota } = require('../nota.js');
+const { Nota } = require('../js/baseMusica/nota.js');
 
 describe('Crear una nota', () => {
     describe('con el constructor', () => {
