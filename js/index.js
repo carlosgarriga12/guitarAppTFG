@@ -74,7 +74,6 @@ class GuitarApp {
 
     limpiarCamposPersonalizada() {
         $("#nombreAfinacion").val("");
-        //$("nombreAfinacion").next().removeClass("active");
         M.updateTextFields();
         $("#cuerdasContainer").empty();
         for (let i = 0; i < 6; i++) {
