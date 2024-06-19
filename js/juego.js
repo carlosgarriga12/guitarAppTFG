@@ -60,7 +60,6 @@ class Juego {
         let acordeAleatorio = Aleatorio.getAcorde(Aleatorio.getNota());
         this.pintarNuevoAcorde(acordeAleatorio);
         this.pintarOpciones(acordeAleatorio);
-        //Revisar para que haya al menos una posicion del acorde seleccionado
     }
 
     pintarNuevoAcorde(acorde) {
@@ -144,6 +143,8 @@ class Juego {
         let segundos = tiempoInicial % 60;
         let tiempoFormateado = minutos.toString().padStart(2, '0') + ":" + segundos.toString().padStart(2, '0');
         temporizadorDiv.html(tiempoFormateado);
+
+        let self = this;
     
         let temporizadorInterval = setInterval(function() {
             tiempoInicial--;
@@ -151,7 +152,7 @@ class Juego {
             if (tiempoInicial <= 0) {
                 clearInterval(temporizadorInterval); 
                 temporizadorDiv.html("¡Tiempo agotado!");
-                if (confirm("¡Tiempo agotado! Aciertos: " + this.aciertos + "\tFallos: " + this.fallos + ". ¿Desea volver a jugar?")) {
+                if (confirm("¡Tiempo agotado! Aciertos: " + self.aciertos + ", Fallos: " + self.fallos + ". ¿Desea volver a jugar?")) {
                     window.location.href = "juego.html";
                 } else {
                     window.location.href = "config.html";
