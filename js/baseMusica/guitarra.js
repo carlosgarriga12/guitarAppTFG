@@ -135,6 +135,7 @@ class Guitarra {
         }
         return false;
     }
+    
 
     buscarAcorde(notasAcorde, afinacionSubset = this.afinacion, mastilSubset = this.mastil) {
         const cantidadCuerdas = afinacionSubset.length;
