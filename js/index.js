@@ -65,7 +65,6 @@ class GuitarApp {
             localStorage.setItem("afinacionPersonalizada_" + afinacionNueva, JSON.stringify(afinacionData));
     
             let afinacionObjeto = localStorage.getItem("afinacionPersonalizada_" + afinacionNueva);
-            console.log(afinacionObjeto);
             alert("Afinación " + afinacionNueva + " guardada correctamente");
             window.location.href = "config.html";
             
@@ -253,7 +252,6 @@ class GuitarApp {
             var clave = localStorage.key(i);
             if (clave.match(/^afinacionPersonalizada_.*/)) {
                 let afinacionObjeto = localStorage.getItem(clave);
-                console.log("Elementos encontrado: \n", afinacionObjeto);
                 afinacionObjeto = JSON.parse(afinacionObjeto);
                 let nuevaAfinacion = $("<option>").html(afinacionObjeto.afinacionNombre).val(afinacionObjeto.afinacionNombre);
                 selectElement.find("option[value='personalizada']").before(nuevaAfinacion);

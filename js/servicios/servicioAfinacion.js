@@ -69,7 +69,6 @@ class ServicioAfinacion {
                 ];
             } else {
                 if (formData.afinacionNombre === "personalizada") {
-                    console.log("Afinación personalizada sin guardar")
                     let notas = [];
 
                     formData.notasPersonalizadas.map(nota => {
@@ -82,12 +81,9 @@ class ServicioAfinacion {
                     
                     return notas.reverse();
                 } else {
-                    console.log("Afinación personalizada guardada")
                     let notas = [];
                     let afinacionPersonalizada = localStorage.getItem("afinacionPersonalizada_" + formData.afinacionNombre);
-                    console.log(afinacionPersonalizada)
                     let afinacionPersonalizadaJSON = JSON.parse(afinacionPersonalizada);
-                    console.log(afinacionPersonalizadaJSON)
                     let notasJSON = afinacionPersonalizadaJSON.notasPersonalizadas;
 
                     notasJSON.map(nota => {

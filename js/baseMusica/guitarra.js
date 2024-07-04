@@ -151,9 +151,6 @@ class Guitarra {
             trastesPorCuerda.push(trastesEnCuerda);
         }
     
-        console.log("Trastes por cuerda");
-        console.log(trastesPorCuerda);
-    
         let combinaciones = [];
         let indices = new Array(cantidadCuerdas).fill(0);
         while (indices[cantidadCuerdas - 1] < trastesPorCuerda[cantidadCuerdas - 1].length) {
@@ -194,9 +191,6 @@ class Guitarra {
         }).filter(combinacion => {
             return this.calcularDistanciaMaxima(combinacion) <= limiteDistanciaMaxima;
         });
-    
-        console.log("Combinaciones filtradas:");
-        console.log(combinacionesFiltradas);
     
         // Buscar en subconjuntos de 4 cuerdas consecutivas
         if (cantidadCuerdas > 4) {

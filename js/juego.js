@@ -95,7 +95,6 @@ class Juego {
 
     pintarOpciones(acorde) {
         let numeroAleatorio = Math.floor(Math.random() * 3);
-        console.log(numeroAleatorio)
         for (let i = 0; i < 3; i++) {
             if (i === numeroAleatorio) {
                 $("#opcionesContainer").append(
