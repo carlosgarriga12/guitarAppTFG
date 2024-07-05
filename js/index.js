@@ -64,7 +64,6 @@ class GuitarApp {
             }
             localStorage.setItem("afinacionPersonalizada_" + afinacionNueva, JSON.stringify(afinacionData));
     
-            let afinacionObjeto = localStorage.getItem("afinacionPersonalizada_" + afinacionNueva);
             alert("Afinación " + afinacionNueva + " guardada correctamente");
             window.location.href = "config.html";
             

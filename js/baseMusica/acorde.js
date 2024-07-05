@@ -6,7 +6,7 @@ const Acordes = {
     Disminuido: "dim",
     MayorSiete: "M7",
     MenorSiete: "m7",
-    MenorSieteB5: "m7b5", // Semidisminuido
+    MenorSieteB5: "m7b5",
     SusDos: "Sus2",
     SusCuatro: "Sus4"
 }
