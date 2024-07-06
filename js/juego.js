@@ -66,6 +66,14 @@ class Juego {
         let esCejilla = false;
         let combinacionesAcordes = this.guitarra.buscarAcorde(acorde.getNotas())
         let posicionDedos = combinacionesAcordes[Math.floor(Math.random() * combinacionesAcordes.length)];
+        if (posicionDedos == undefined) {
+            setTimeout(function(){
+                alert("No se han encontrado suficientes acordes para jugar con la afinación seleccionada");
+                window.location.href = "config.html";
+                return;
+            }, 500);
+        }
+        
         let trastes = posicionDedos.filter(traste => traste !== -1 && traste !== 0);
         let trasteMinimo = Math.min(...trastes);
 
