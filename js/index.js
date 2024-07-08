@@ -23,8 +23,12 @@ class GuitarApp {
         $("#eliminarAfinacionPersonalizada").on("click", () => {
             if (confirm("¿Estás seguro de que deseas eliminar la afinación " + $("#afinacionPredefinida").val() + "?")) {
                 localStorage.removeItem("afinacionPersonalizada_" + $("#afinacionPredefinida").val());
+                let afinacionData = {};
+                afinacionData.afinacionNombre = "estandar";
+                localStorage.setItem("afinacionData", JSON.stringify(afinacionData));
                 window.location.reload();
                 this.cargarAfinacionesPersonalizadas();
+                
             } else {
                 return;
             }
